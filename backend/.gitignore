@@ -1,6 +1,11 @@
 # Ignore environment variables
 .env
 
+PORT=5000
+MONGO_URI=mongodb+srv://imanidigitaldiary_db_user:uGfcfkWRsL7sQ8fe@cluster0.lljlp4i.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+EMAIL_USER=imanidigitaldiary@gmail.com
+EMAIL_PASS='$BillionDollarBaby1'
+
 # Ignore node dependencies
 node_modules/
 
