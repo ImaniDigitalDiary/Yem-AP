@@ -4,8 +4,8 @@ import Vendor from '../models/vendorModel.js'
 // fxn to get all vendors
 export async function getAllVendors (req,res) {
     try {
-        // fetch all vendors - using .find() will give every single vendor
-        const vendors = await Vendor.find()
+        // fetch all vendors - using .find() will give ALL vendors
+        const vendors = await Vendor.find().sort({createdAt: -1}) //createdAt -1 will sort the vendors from newest to oldest
         res.status(200).json(vendors)
     } catch (error) {
         console.error('Error in getAllVendors controller', error)
