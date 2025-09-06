@@ -11,6 +11,9 @@ const PORT = process.env.PORT || 5001
 // call the connectdb method
 connectDB()
 
+// middleware
+app.use(express.json())
+
 app.use('/api/vendors', vendorRoutes)
 
 app.listen(PORT, () => {

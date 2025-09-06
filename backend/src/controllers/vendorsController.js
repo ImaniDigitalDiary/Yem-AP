@@ -13,6 +13,20 @@ export async function getAllVendors (req,res) {
     }
 }
 
+export async function getVendorById(req, res) {
+    try {
+        const vendor = await Vendor.findById(req.params.vendorId)
+        if(!vendor) {
+            return res.status(404).json({message: 'Vendor not found!'})
+        } else {
+            res.json(vendor)
+        }
+    } catch (error) {
+        console.error('Error in getVendorById controller', error)
+        res.status(500).json({message: 'Internal server error'})
+    }
+}
+
 // fxn to create a vendor
 export async function createAVendor (req,res) {
     try {
