@@ -2,7 +2,7 @@
 import Vendor from '../models/vendorModel.js'
 
 // fxn to get all vendors
-export async function getAllVendors (req,res) {
+export async function getAllVendors (_,res) { //using an _ instead of req when declared but value is never read
     try {
         // fetch all vendors - using .find() will give ALL vendors
         const vendors = await Vendor.find().sort({createdAt: -1}) //createdAt -1 will sort the vendors from newest to oldest
