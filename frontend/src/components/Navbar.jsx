@@ -14,7 +14,7 @@ const Navbar = () => {
           </h1>
           {/* right side of div */}
           <div className='flex items-center gap-4'>
-            <Link to={'/create-vendor'} className='btn btn-primary'>
+            <Link to={'/create-vendor'} className='btn btn-primary rounded-full'>
             <PlusIcon className='size-5' />
             <span>New Vendor</span>
             </Link>
