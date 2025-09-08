@@ -1,8 +1,27 @@
 import { PenSquareIcon, Trash2Icon } from 'lucide-react'
 import React from 'react'
 import { Link } from 'react-router'
+import { formatDate } from '../../lib/utils'
+import axiosAPI from '../../lib/axios'
+import toast from 'react-hot-toast'
 
-const VendorCard = ({vendor}) => {
+const VendorCard = ({vendor, setVendors, vendorName}) => {
+
+    const handleDelete = async (e, vendorId) => {
+        e.preventDefault() // get rid of the navigation behavior or making the whole card a link and just make each icon a link
+
+        if(!window.confirm(`Are you sure you want to delete vendor ${vendor.vendorName} ?` )) 
+            return
+        try {
+            await axiosAPI.delete(`/vendors/${vendorId}`)
+            setVendors((prevVendors) => prevVendors.filter((vendor) => vendor._id !== vendorId)) //updated ui immediately - once note is deleted successfully, get all previous vendors and filter out the one that was deleted
+            toast.success('Vendor deleted successfully')
+        } catch (error) {
+            console.log('Erorr in handle delete', error)
+            toast.error('Failed to delete vendor')
+        }
+    }
+
   return (
     <div>
       <Link 
@@ -15,11 +34,12 @@ const VendorCard = ({vendor}) => {
 
             <div className='card-actions justify-between items-center mt-4'>
                 <span className='text-sm text-base-content/60'>
-                    {vendor.createdAt}
+                    {/* use the formatDate fxn  from utils.js with new Date that will take the date and give it a more readible format */}
+                    {formatDate(new Date(vendor.createdAt))} 
                 </span>
                 <div className='flex items-center gap-1'>
                     <PenSquareIcon className='size-4'/>
-                    <button className='btn btn-ghost btn-sm'>
+                    <button className='btn btn-ghost btn-sm' onClick={(e) => handleDelete(e, vendor._id)}>
                         <Trash2Icon className='size-4' />
                     </button>
                 </div>

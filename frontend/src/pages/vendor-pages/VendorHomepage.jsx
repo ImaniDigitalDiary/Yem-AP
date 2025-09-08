@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar'
 import RateLimitedUI from '../../components/RateLimitedUI'
 import VendorCard from '../../components/vendor-components/VendorCard'
+import VendorsNotFound from '../../components/VendorsNotFound'
 
 // axios api routes
 import axios from 'axios'
+import axiosAPI from '../../lib/axios'
 
 // toast
 import toast from 'react-hot-toast'
@@ -19,7 +21,7 @@ const VendorHomepage = () => {
     const fetchVendors = async () => {
       try {
         // using axios instead of fetch
-        const res = await axios.get('http://localhost:5003/api/vendors')
+        const res = await axiosAPI.get('/vendors')
         console.log(res.data)
         setVendors(res.data)
         setRateLimited(false) //set to false bc if we're able to get the data, we're not rate limited
@@ -48,11 +50,13 @@ const VendorHomepage = () => {
       <div className='mx-w-7xl mx-auto p-4 mt-6'>
         {loading && <div className='text-center text-primary py-10'>Loading vendors...</div>}
 
+        {vendors.length === 0 && !isRateLimited && <VendorsNotFound />}
+
         {vendors.length > 0 && !isRateLimited && (
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
             {/* get vendor and map through. for every single vendor, return a comp */}
             {vendors.map(vendor => (
-              <VendorCard key={vendor._id} vendor={vendor} />
+              <VendorCard key={vendor._id} vendor={vendor}  setVendors={setVendors}/>
             ))
 
             }

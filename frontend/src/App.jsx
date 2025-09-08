@@ -6,7 +6,7 @@ import VendorHomepage from './pages/vendor-pages/VendorHomepage'
 import VendorCreatePage from './pages/vendor-pages/VendorCreatePage'
 import VendorDetailPage from './pages/vendor-pages/VendorDetailPage'
 
-import toast from 'react-hot-toast'
+// import toast from 'react-hot-toast'
 
 const App = () => {
   return (
