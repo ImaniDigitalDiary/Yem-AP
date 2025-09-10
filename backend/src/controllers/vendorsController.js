@@ -15,6 +15,7 @@ export async function getAllVendors (_,res) { //using an _ instead of req when d
 
 export async function getVendorById(req, res) {
     try {
+        //check to see if vendor exists
         const vendor = await Vendor.findById(req.params.vendorId)
         if(!vendor) {
             return res.status(404).json({message: 'Vendor not found!'})
