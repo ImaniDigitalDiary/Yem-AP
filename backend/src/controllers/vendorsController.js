@@ -51,8 +51,8 @@ export async function updateAVendor (req,res)  {
             req.params.vendorId, 
             {vendorName, vendorEmail},
             {
-                new: true,
-            }
+                new: true //ensure that the modified document is returned in the callback or promise. without new: true, would typically return the original unmodofied docuemtn by default
+            },
         )
         if (!updatedVendor) return res.status(404).json({message: 'Vendor not found'})
         res.status(200).json(updatedVendor)
