@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import axiosAPI from '../../lib/axios'
 import toast from 'react-hot-toast'
-import { LoaderIcon, ArrowLeftIcon, Trash2Icon } from 'lucide-react'
+
+// ICONS
+import { LoaderIcon, ArrowLeftIcon, Trash2Icon, FilePlus2 } from 'lucide-react'
 
 const VendorDetailPage = () => {
   const [vendor, setVendor] = useState(null)
@@ -81,6 +83,10 @@ const VendorDetailPage = () => {
               <ArrowLeftIcon className='h-5 w-5'/>
               Back to Vendors
             </Link>
+            {/* <button>
+              <Link to='#invoicePage'>
+              </Link>
+            </button> */}
             <button onClick={handleDelete} className='btn btn-error btn-outline'>
                 <Trash2Icon className='h-5 w-5' />
                 Delete Vendor

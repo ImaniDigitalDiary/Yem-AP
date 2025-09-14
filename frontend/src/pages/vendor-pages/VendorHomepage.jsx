@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 // components
-import Navbar from '../../components/Navbar'
+import VendorNavbar from '../../components/vendor-components/VendorNavbar'
 import RateLimitedUI from '../../components/RateLimitedUI'
 import VendorCard from '../../components/vendor-components/VendorCard'
 import VendorsNotFound from '../../components/VendorsNotFound'
@@ -43,7 +43,7 @@ const VendorHomepage = () => {
   }, [])
   return (
     <div className='min-h-screen'>
-      <Navbar />
+      <VendorNavbar />
 
       {isRateLimited && <RateLimitedUI />}
 
