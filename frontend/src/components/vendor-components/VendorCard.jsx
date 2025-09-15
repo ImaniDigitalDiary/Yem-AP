@@ -32,6 +32,7 @@ const VendorCard = ({vendor, setVendors, vendorName}) => {
                 {/* <span className='text-sm text-base-content/60'>
                     {formatDate(new Date(vendor.createdAt))} 
                 </span> */}
+
                 <Link to={`/vendor/${vendor._id}`}>
                 <div className='editIcon flex items-center gap-1'>
                     <PenSquareIcon className='size-4'/>

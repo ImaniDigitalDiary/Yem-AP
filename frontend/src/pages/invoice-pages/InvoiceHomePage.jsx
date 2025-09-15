@@ -1,14 +1,70 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router'
-import InvoiceNavbar from '../../components/invoice-components/InvoiceNavbar'
+// COMPONENTS
+import InvoiceNavBar from '../../components/invoice-components/InvoiceNavbar'
+import RateLimitedUI from '../../components/RateLimitedUI'
+import InvoiceCard from '../../components/invoice-components/InvoiceCard'
+import InvoicesNotFound from '../../components/invoice-components/InvoicesNotFound'
+
+
+// AXIOS API ROUTES
+import axios from 'axios'
 import axiosAPI from '../../lib/axios'
 
-const InvoiceHomePage = () => {
-  
+// TOAST
+import toast from 'react-hot-toast'
 
+
+const InvoiceHomePage = () => {
+  const [isRateLimited, setRateLimited] = useState(false) //a boolean - true by default in order to see in the UI
+  const [invoices, setInvoices] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      try {
+        // using axios instead of fetch
+        const res = await axiosAPI.get(`/vendor/${vendorId}/invoices`)
+        console.log(res.data)
+        setInvoices(res.data)
+        setRateLimited(false) //set to false bc if we're able to get the data, we're not rate limited
+        // const data = await res.json() ....this would be for fetch
+      } catch (error) {
+          console.log('Error fetching invoices')
+          console.log(error)
+          if(error.response?.status === 429) {
+            setRateLimited(true)
+          } else {
+            toast.error('Failed to load invoices')
+          }
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchInvoices()
+  }, [])
   return (
     <div className='min-h-screen'>
-      <InvoiceNavbar />
+      <InvoiceNavBar />
+
+      {isRateLimited && <RateLimitedUI />}
+
+      <div className='mx-w-7xl mx-auto p-4 mt-6'>
+        {loading && <div className='text-center text-primary py-10'>Loading invoices...</div>}
+
+        {invoices.length === 0 && !isRateLimited && <InvoicesNotFound />}
+
+        {invoices.length > 0 && !isRateLimited && (
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+            {/* get invoice and map through. for every single invoice, return a comp */}
+            {invoices.map(invoice => (
+              <InvoiceCard key={invoice._id} invoice={invoice}  setInvoices={setInvoices}/>
+            ))
+
+            }
+          </div>
+        )} 
+      </div>
     </div>
   )
 }
