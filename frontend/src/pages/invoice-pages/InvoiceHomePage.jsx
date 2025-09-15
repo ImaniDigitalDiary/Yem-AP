@@ -7,14 +7,15 @@ import InvoicesNotFound from '../../components/invoice-components/InvoicesNotFou
 
 
 // AXIOS API ROUTES
-import axios from 'axios'
 import axiosAPI from '../../lib/axios'
 
 // TOAST
 import toast from 'react-hot-toast'
+import { useParams } from 'react-router'
 
 
 const InvoiceHomePage = () => {
+  const {vendorId} = useParams()
   const [isRateLimited, setRateLimited] = useState(false) //a boolean - true by default in order to see in the UI
   const [invoices, setInvoices] = useState([])
   const [loading, setLoading] = useState(true)
@@ -23,14 +24,14 @@ const InvoiceHomePage = () => {
     const fetchInvoices = async () => {
       try {
         // using axios instead of fetch
-        const res = await axiosAPI.get(`/vendor/${vendorId}/invoices`)
-        console.log(res.data)
+        const res = await axiosAPI.get(`/vendors/${vendorId}/invoices`)
+        console.log('invoices api response:' , res.data)
         setInvoices(res.data)
         setRateLimited(false) //set to false bc if we're able to get the data, we're not rate limited
         // const data = await res.json() ....this would be for fetch
       } catch (error) {
-          console.log('Error fetching invoices')
-          console.log(error)
+          console.log('Error fetching invoices', error)
+          // console.log(error)
           if(error.response?.status === 429) {
             setRateLimited(true)
           } else {
@@ -40,9 +41,11 @@ const InvoiceHomePage = () => {
         setLoading(false)
       }
     }
+    if (vendorId) { // only fetch if vendorId is available
+      fetchInvoices()
 
-    fetchInvoices()
-  }, [])
+    }
+  }, [vendorId]) //refetch is the vendorId changes
   return (
     <div className='min-h-screen'>
       <InvoiceNavBar />

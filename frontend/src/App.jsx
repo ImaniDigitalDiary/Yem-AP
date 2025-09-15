@@ -18,7 +18,7 @@ const App = () => {
           <Route path='/create-vendor' element={<VendorCreatePage/>} />
           <Route path='/vendor/:vendorId' element={<VendorDetailPage/>} />
           {/* INVOICES */}
-          <Route path='/vendor/:vendorId/invoices' element={<InvoiceHomePage />} />
+          <Route path='/vendors/:vendorId/invoices' element={<InvoiceHomePage />} />
         </Routes>
     </div>
   )
