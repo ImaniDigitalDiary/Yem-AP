@@ -1,5 +1,8 @@
 import React from 'react'
 
+// ICONS
+import { PenSquareIcon, Trash, Trash2Icon } from 'lucide-react'
+
 const VendorsTable = ({vendors}) => {
   return (
     <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
@@ -18,7 +21,14 @@ const VendorsTable = ({vendors}) => {
                     >
                         <th className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>{vendor.vendorName}</th>
                         <td>{vendor.vendorEmail}</td>
-                        <td></td>
+                        <td>
+                            <button>
+                                <PenSquareIcon />
+                            </button>
+                            <button>
+                                <Trash2Icon />
+                            </button>
+                        </td>
                     </tr>
                 ))}
                 
