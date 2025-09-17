@@ -18,13 +18,9 @@ const VendorNavbar = () => {
             <PlusIcon className='size-5' />
             <span>Create New Vendor</span>
             </Link>
-
           </div>
-
         </div>
-
-      </div>
-      
+      </div>      
     </header>
   )
 }
