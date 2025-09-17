@@ -115,16 +115,8 @@ const VendorHomepage = () => {
 
         {/* if vendors array length is greater than 0, then map through the vendor array then return the vendor table with vendors  */}
         {vendors.length > 0 && (
-          <div>
-            {vendors.map(vendor => (
-              <VendorsTable 
-                key={vendor._id}
-                vendor={vendor}
-                setVendors={setVendors}
-              />
-            ))}
-          </div>
-        )}
+              <VendorsTable vendors={vendors} setVendors={setVendors} />
+            )}
       </div>
     </div>
   )

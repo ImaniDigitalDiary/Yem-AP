@@ -1,20 +1,24 @@
 import React from 'react'
 
-const VendorsTable = (invoice) => {
+const VendorsTable = ({vendors}) => {
   return (
     <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
             <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                 <tr>
-                    <th>{invoice.vendor.vendorName}</th>
-                    <th>{invoice.vendor.vendorEmail}</th>
-                    <th>View Vendor Details</th>
+                    <th>Vendor Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-
-                </tr>
+                {vendors.map((vendor) => (
+                    <tr key={vendor._id}>
+                        <th>{vendor.vendorName}</th>
+                        <td>{vendor.vendorEmail}</td>
+                    </tr>
+                ))}
+                
             </tbody>
 
         </table>
