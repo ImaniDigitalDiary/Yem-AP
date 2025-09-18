@@ -1,11 +1,12 @@
 import React from 'react'
 
+
 // ICONS
-import { PenSquareIcon, Trash, Trash2Icon } from 'lucide-react'
+import { PenSquareIcon, Trash2Icon } from 'lucide-react'
 
 const VendorsTable = ({vendors}) => {
   return (
-    <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
+    <div className='relative overflow-x-auto shadow-md sm:rounded-lg m-5'>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
             <thead className='text-md text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                 <tr>
@@ -17,7 +18,7 @@ const VendorsTable = ({vendors}) => {
             <tbody>
                 {vendors.map((vendor) => (
                     <tr key={vendor._id}
-                        className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200'
+                        className='hover:bg-gray-500  bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200'
                     >
                         <th className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>{vendor.vendorName}</th>
                         <td>{vendor.vendorEmail}</td>
