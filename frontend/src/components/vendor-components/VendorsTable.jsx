@@ -5,6 +5,10 @@ import React from 'react'
 import { PenSquareIcon, Trash2Icon } from 'lucide-react'
 
 const VendorsTable = ({vendors}) => {
+
+
+
+
   return (
     <div className='relative overflow-x-auto shadow-md sm:rounded-lg m-5'>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
@@ -22,13 +26,17 @@ const VendorsTable = ({vendors}) => {
                     >
                         <th className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>{vendor.vendorName}</th>
                         <td>{vendor.vendorEmail}</td>
-                        <td>
-                            <button>
-                                <PenSquareIcon />
-                            </button>
-                            <button>
-                                <Trash2Icon />
-                            </button>
+                        <td className='flex justify-between'>
+                            <div className="penTrashIconsDiv">
+                                <button>
+                                    <PenSquareIcon />
+                                </button>
+                                <button>
+                                    <Trash2Icon />
+                                </button>
+                            </div>
+                            
+                            <button>View Vendor Details</button>
                         </td>
                     </tr>
                 ))}
