@@ -14,7 +14,7 @@ export async function getAllVendors (_,res) { //using an _ instead of req when d
 }
 
 export async function getVendorById(req, res) {
-    try {
+    try { 
         //check to see if vendor exists
         const vendor = await Vendor.findById(req.params.vendorId)
         if(!vendor) {
@@ -31,8 +31,8 @@ export async function getVendorById(req, res) {
 // fxn to create a vendor
 export async function createAVendor (req,res) {
     try {
-        const {vendorName, vendorEmail} = req.body
-        const vendor = new Vendor({vendorName, vendorEmail})
+        const {vendorName, dbaName, vendorType, taxId, primaryContact, contactRole, phoneNumber, vendorEmail} = req.body
+        const vendor = new Vendor({vendorName, dbaName, vendorType, taxId, primaryContact, contactRole, phoneNumber, vendorEmail, })
 
         const savedVendor = await vendor.save()
         res.status(201).json(savedVendor)
