@@ -6,6 +6,7 @@ import axiosAPI from '../../lib/axios'
 import toast from 'react-hot-toast'
 // COMPONENTS
 import VendorsNotFound from '../../components/vendor-components/VendorsNotFound'
+import VendorNavbar from '../../components/vendor-components/VendorNavbar'
 
 const VendorDetailPage = () => {
     const [vendor, setVendor] = useState(null)
@@ -30,17 +31,21 @@ const VendorDetailPage = () => {
     // if fendor is not found, load VendorNotFound comp
     if (!vendor) return <VendorsNotFound />
   return (
-    <div className='m-5 p-5 shadow-md bg-white rounded'>
-        <h2 className='text-2xl font-bold mb-3'>{vendor.vendorName}</h2>
-        <p>Email: {vendor.vendorEmail}</p>
-        <p>Vendor Name: {vendor.vendorName}</p>
-        <p>dba Name: {vendor.dbaName}</p>
-        <p>Primary Contact: {vendor.primaryContact}</p>
-        <p>Contact Role: {vendor.contactRole}</p>
-        <p>Tax ID: {vendor.taxId}</p>
+   <div>
+    <VendorNavbar />
 
-        <Link to={`/vendors/${vendor._id}/invoices`}>View Invoices</Link>
-    </div>
+    <div className='m-5 p-5 shadow-md bg-white rounded'>
+    <h2 className='text-2xl font-bold mb-3'>{vendor.vendorName}</h2>
+    <p>Email: {vendor.vendorEmail}</p>
+    <p>Vendor Name: {vendor.vendorName}</p>
+    <p>dba Name: {vendor.dbaName}</p>
+    <p>Primary Contact: {vendor.primaryContact}</p>
+    <p>Contact Role: {vendor.contactRole}</p>
+    <p>Tax ID: {vendor.taxId}</p>
+
+    <Link to={`/vendors/${vendor._id}/invoices`} state={{vendor}}>View Invoices</Link>
+</div>
+   </div>
   )
 }
 
