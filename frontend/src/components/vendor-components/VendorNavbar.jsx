@@ -9,16 +9,25 @@ const VendorNavbar = () => {
       <div className='mx-auto max-w-6xl p-4'>
         <div className='flex items-center justify-between'>
           {/* left side of div */}
-          <h1 className='text-3xl font-bold text-primary font-mono tracking-tight'>
-            Vendor Page
-          </h1>
+          <div className='flex-col'>
+            <h1 className='text-4xl font-bold text-primary font-mono tracking-widest'>
+              Yem<span className='text-cyan-600'>AP</span>
+            </h1>
+            <div className='uppercase text-center'>
+                <h4 className='text-cyan-800 font-bold tracking-tight'>
+                  Vendors
+                </h4>
+            </div>
+          </div>
           {/* right side of div */}
-          <div className='flex items-center gap-4'>
+         {/* <div className='flex flex-col'> */}
+           <div className='flex items-center gap-4'>
             <Link to={'/create-vendor'} className='btn btn-primary rounded-full'>
             <PlusIcon className='size-5' />
             <span>Create New Vendor</span>
             </Link>
           </div>
+         {/* </div> */}
         </div>
       </div>      
     </header>
