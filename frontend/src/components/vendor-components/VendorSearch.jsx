@@ -7,7 +7,7 @@ const VendorSearch = () => {
       <input 
         type="text"
         placeholder='Search Vendors...'
-        className='p-2'
+        className='p-2 rounded-md w-96'
         // value={}
         // onChange={}
     />
