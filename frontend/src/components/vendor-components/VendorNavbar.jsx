@@ -10,13 +10,15 @@ const VendorNavbar = () => {
         <div className='flex items-center justify-between'>
           {/* left side of div */}
           <div className='flex-col'>
-            <h1 className='text-4xl font-bold text-primary font-mono tracking-widest'>
+            <Link to={`/vendors`}
+              className='text-4xl font-bold text-primary font-mono tracking-widest'>
               Yem<span className='text-cyan-600'>AP</span>
-            </h1>
+            </Link>
             <div className='uppercase text-center'>
-                <h4 className='text-cyan-800 font-bold tracking-tight'>
+                <Link to={`/vendors`}
+                  className='text-cyan-800 font-bold tracking-tight'>
                   Vendors
-                </h4>
+                </Link>
             </div>
           </div>
           {/* right side of div */}
