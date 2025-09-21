@@ -8,8 +8,17 @@ import axios from 'axios'
 import axiosAPI from '../../lib/axios'
 
 const VendorCreatePage = () => {
+  // BASIC VENDOR INFO
   const [vendorName, setVendorName] = useState('')
+  const [dbaName, setDbaName] = useState('')
+  const [vendorType, setVendorType] = useState('')
+  const [taxId, setTaxId] = useState('')
+  // CONTACT INFO
+  const [primContact, setPrimContact] = useState('')
+  const [contactRole, setCoontactRole] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
   const [vendorEmail, setVendorEmail] = useState('')
+
   const [loading,setLoading] = useState(false) //by default it's fault, once form is submitted, it'll equal to true
 
   // useNavigate hook
@@ -48,39 +57,138 @@ const VendorCreatePage = () => {
     <div className='min-h-screen bg-base-200'>
       <div className='container mx-auto px-4 py-8'>
         <div className='max-w-2xl mx-auto'>
+{/* navigation */}
           <Link to={'/vendors'} className='btn btn-ghost mb-6'>
             <ArrowLeftIcon className='size-5' />
             Back to Vendors
           </Link>
-
+{/* card */}
           <div className='card bg-base-100'>
             <div className='card-body'>
               <h2 className='card-title text-2xl mb-4'> Create New Vendor</h2>
               <form onSubmit={handleSubmit}>
-                <div className='form-control mb-4'>
-                  <label htmlFor="" className='label'>
-                    <span className='label-text'>Vendor Name</span>
-                  </label>
-                  <input 
-                    value={vendorName}
-                    onChange={(e) => setVendorName(e.target.value)} //update state
-                    type="text"  
-                    placeholder='Vendor Name' 
-                    className='input input-bordered'
-                    name="" id="" />
+{/* START: BASIC VENDOR INFO  */}
+                {/* vendor name & dba name flex container */}
+                <div className='flex justify-around'>
+                  {/* VENDOR NAME */}
+                  <div className='form-control mb-4'>
+                    <label htmlFor="" className='label'>
+                      <span className='label-text'>Vendor Name</span>
+                    </label>
+                    <input 
+                      value={vendorName}
+                      onChange={(e) => setVendorName(e.target.value)} //update state
+                      type="text"  
+                      placeholder='Vendor Name' 
+                      className='input input-bordered'
+                      name="" id="" />
+                  </div>
+                  {/* DBA NAME */}
+                  <div className='form-control mb-4'>
+                    <label htmlFor="" className='label'>
+                      <span className='label-text'>dba Name</span>
+                    </label>
+                    <input 
+                      value={dbaName}
+                      onChange={(e) => setDbaName(e.target.value)} //update state
+                      type="text"  
+                      placeholder='dba Name' 
+                      className='input input-bordered'
+                      name="" id="" />
+                  </div>
                 </div>
-                <div className='form-control mb-4'>
-                  <label htmlFor="" className='label'>
-                    <span className='label-text'>Vendor Email</span>
-                  </label>
-                  <input 
-                    value={vendorEmail}
-                    onChange={(e) => setVendorEmail(e.target.value)} //update state
-                    type="text"  
-                    placeholder='Vendor Email' 
-                    className='input input-bordered'
-                    name="" id="" />
+                {/* vendor type & tax id flex container */}
+                <div className='flex justify-around'>
+                  {/* VENDOR TYPE  - RADIO DROPDOWN*/}
+                  <div className='form-control mb-4'>
+                    <label htmlFor="" className='label'>
+                      <span className='label-text'>Vendor Type</span>
+                    </label>
+                    <input 
+                      value={vendorType}
+                      onChange={(e) => setVendorType(e.target.value)} //update state
+                      type="text"  
+                      placeholder='will be a dropdown**' 
+                      className='input input-bordered'
+                      name="" id="" />
+                  </div>
+                  {/* TAX ID */}
+                  <div className='form-control mb-4'>
+                    <label htmlFor="" className='label'>
+                      <span className='label-text'>Tax ID</span>
+                    </label>
+                    <input 
+                      value={taxId}
+                      onChange={(e) => setTaxId(e.target.value)} //update state
+                      type="text"  
+                      placeholder='Tax ID' 
+                      className='input input-bordered'
+                      name="" id="" />
+                  </div>
                 </div>
+{/* END: BASIC VENDOR INFO  */}  
+
+{/* START: CONTACT INFO */}
+                {/* primary contact & contact role flex container */}
+                <div className='flex justify-around'>
+                  {/* PRIMARY CONTACT */}
+                  <div className='form-control mb-4'>
+                    <label htmlFor="" className='label'>
+                      <span className='label-text'>Primary Contact</span>
+                    </label>
+                    <input 
+                      value={primContact}
+                      onChange={(e) => setPrimContact(e.target.value)} //update state
+                      type="text"  
+                      placeholder='Primary Contact' 
+                      className='input input-bordered'
+                      name="" id="" />
+                  </div>
+                  {/* CONTACT ROLE */}
+                  <div className='form-control mb-4'>
+                    <label htmlFor="" className='label'>
+                      <span className='label-text'>Contact Role</span>
+                    </label>
+                    <input 
+                      value={contactRole}
+                      onChange={(e) => setCoontactRole(e.target.value)} //update state
+                      type="text"  
+                      placeholder='Contact Role' 
+                      className='input input-bordered'
+                      name="" id="" />
+                  </div>
+                </div>
+                {/* phone number & vendor email flex container */}
+                <div className='flex justify-around'>
+                  {/* PHONE NUMBER */}
+                  <div className='form-control mb-4'>
+                    <label htmlFor="" className='label'>
+                      <span className='label-text'>Phone Number</span>
+                    </label>
+                    <input 
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)} //update state
+                      type="text"  
+                      placeholder='Phone Number' 
+                      className='input input-bordered'
+                      name="" id="" />
+                  </div>
+                  {/* VENDOR EMAIL */}
+                  <div className='form-control mb-4'>
+                    <label htmlFor="" className='label'>
+                      <span className='label-text'>Vendor Email</span>
+                    </label>
+                    <input 
+                      value={vendorEmail}
+                      onChange={(e) => setVendorEmail(e.target.value)} //update state
+                      type="text"  
+                      placeholder='Vendor Email' 
+                      className='input input-bordered'
+                      name="" id="" />
+                  </div>
+                </div>
+
+
                 <div className='card-actions justify-end'>
                   <button type='submit' className='btn btn-primary' disabled={loading}>
                     {loading ? 'Creating...' : 'Create Vendor'}
