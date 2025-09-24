@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 // COMPONENTS
 import InvoiceNavBar from '../../components/invoice-components/InvoiceNavbar'
 import RateLimitedUI from '../../components/RateLimitedUI'
-import InvoiceCard from '../../components/invoice-components/InvoiceCard'
+// import InvoiceCard from '../../components/invoice-components/InvoiceCard'
 import InvoicesNotFound from '../../components/invoice-components/InvoicesNotFound'
+import VendorInvoiceTable from '../../components/invoice-components/VendorInvoiceTable'
 
 
 // AXIOS API ROUTES
@@ -55,18 +56,14 @@ const InvoiceHomePage = () => {
       <div className='mx-w-7xl mx-auto p-4 mt-6'>
         {loading && <div className='text-center text-primary py-10'>Loading invoices...</div>}
 
-        {invoices.length === 0 && !isRateLimited && <InvoicesNotFound />}
+        {/* if invoices length is equal to 0 and isRateLimited true (bc already set to false) then return InvoiceNotFound component */}
+        {invoices.length === 0 && !loading && !isRateLimited && <InvoicesNotFound />}
 
-        {invoices.length > 0 && !isRateLimited && (
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-            {/* get invoice and map through. for every single invoice, return a comp */}
-            {invoices.map(invoice => (
-              <InvoiceCard key={invoice._id} invoice={invoice}  setInvoices={setInvoices}/>
-            ))
+        {/* if invoices length is greater than 0, return InvoiceTable component */}
+        {invoices.length > 0 && (
+          <VendorInvoiceTable invoices={invoices} setInvoices={invoices}/>
+        )}
 
-            }
-          </div>
-        )} 
       </div>
     </div>
   )

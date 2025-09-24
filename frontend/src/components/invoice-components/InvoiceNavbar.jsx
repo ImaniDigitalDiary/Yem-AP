@@ -21,7 +21,7 @@ const InvoiceNavbar = () => {
             <div className='uppercase text-center'>
                 <Link to={`/vendors`}
                   className='text-cyan-800 font-bold tracking-tight'>
-                  {vendor?.vendorName} Invoices
+                  <span className='text-cyan-600'>{vendor?.vendorName}</span> &nbsp; Invoices
                 </Link>
             </div>
           </div>
