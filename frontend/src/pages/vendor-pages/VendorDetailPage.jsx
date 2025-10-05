@@ -34,7 +34,7 @@ const VendorDetailPage = () => {
    <div>
     <VendorNavbar />
 
-    <div className='m-5 p-5 shadow-md bg-white rounded'>
+    <div className='vendorDetails m-20 p-10 shadow-md bg-white rounded '>
     <h2 className='text-2xl font-bold mb-3'>{vendor.vendorName}</h2>
     <p>Email: {vendor.vendorEmail}</p>
     <p>Vendor Name: {vendor.vendorName}</p>
