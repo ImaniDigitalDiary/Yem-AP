@@ -14,7 +14,7 @@ const InvoicesNotFound = () => {
         <p className='text-base-content/70'>
             Ready to transform your business? Create your first invoice for vendor to get started.
         </p>
-        <Link to='/create-vendor' className='btn btn-primary'>
+        <Link to='/vendors/:vendorId/create-invoice' className='btn btn-primary'>
             Create Your First Invoice For Vendor
         </Link>
       

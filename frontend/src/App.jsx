@@ -7,6 +7,7 @@ import VendorCreatePage from './pages/vendor-pages/VendorCreatePage'
 import EditVendorDetailsPage from './pages/vendor-pages/EditVendorDetailsPage'
 import InvoiceHomePage from './pages/invoice-pages/InvoiceHomePage'
 import VendorDetailPage from './pages/vendor-pages/VendorDetailPage'
+import InvoiceCreatePage from './pages/invoice-pages/InvoiceCreatePage'
 
 // import toast from 'react-hot-toast'
 
@@ -19,8 +20,11 @@ const App = () => {
           <Route path='/create-vendor' element={<VendorCreatePage/>} />
           <Route path='/vendors/:vendorId/vendor-details' element={<VendorDetailPage />} />
           {/* <Route path='/vendor/:vendorId' element={<EditVendorDetailsPage/>} /> */}
+
+
           {/* INVOICES */}
           <Route path='/vendors/:vendorId/invoices' element={<InvoiceHomePage />} />
+          <Route path='/vendors/:vendorId/create-invoice' element={<InvoiceCreatePage />} />
         </Routes>
     </div>
   )
