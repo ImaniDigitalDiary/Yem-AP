@@ -17,29 +17,29 @@ const InvoiceCreatePage = () => {
   // param
   const {vendorId} = useParams()
 
-  const handleInvoiceSubmit = async () => {
+  const handleInvoiceSubmit = async (e) => {
     e.preventDefault()
 
     setLoading(true)
       try {
-        await axiosAPI.post('/vendors/:vendorId/invoices', {
+        await axiosAPI.post(`/vendors/${vendorId}/invoices`, {
           invoiceNumber,
           invoiceUnits
         })
         toast.success('Invoice created successfully')
-        navigate('/vendors/:vendorId/invoices')
+        navigate(`/vendors/${vendorId}/invoices`)
       } catch (error) {
           console.log('Error creating invoice', error)
           toast.error('Failed to create invoice')
       } finally {
         setLoading(false)
       }
+      console.log(invoiceNumber)
+      console.log(invoiceUnits)
   }
 
   return (
-    <div>
-      
-
+    <div className='min-h-screen bg-base-200'>
       {/* card */}
       <div className='card bg-base-100'>
         <div className='card-body'>
@@ -47,12 +47,12 @@ const InvoiceCreatePage = () => {
             Create Invoice For Vendor
           </h2>
           {/* FORM */}
-          <form onSubmit={handleInvoiceSubmit}>
+          <form onSubmit={handleInvoiceSubmit} id='invoiceForm'>
 {/* FORM - INVOICE INFO */}
             <div className='flex justify-around'>
               {/* invoice number */}
               <div className='form-control mb-4 invoiceNumber'>
-                <label htmlFor="" className='label'>Invoice#</label>
+                <label className='label'>Invoice#</label>
                 <input
                 value={invoiceNumber}
                 onChange={(e) => setInvoiceNumber(e.target.value)} //update state to targeted value
@@ -61,14 +61,23 @@ const InvoiceCreatePage = () => {
                 />
               </div>
               <div className='form-control mb-4 invoiceUnits'>
-                <label htmlFor="" className='label'>Invoice Units</label>
+                <label className='label'>Invoice Units</label>
                 <input
                   value={invoiceUnits}
-                  onChange={(e) => setInvoiceUnitse(e.target.value)}
+                  onChange={(e) => setInvoiceUnits(e.target.value)}
                   className='input input-bordered'
                   type="text" 
                 />
               </div>
+
+              <div className='card-actions justify-end'>
+                <button
+                  onClick={() => navigate(`/vendors/${vendorId}/invoices`)}
+                  type='submit' className='btn btn-primary createInvoiceSubmitBtn' disabled={loading}>
+                  {loading ? 'Creating...' : 'Create Invoice'}
+                </button>
+              </div>
+  
 
             </div>
           </form>
