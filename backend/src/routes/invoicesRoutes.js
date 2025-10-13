@@ -1,21 +1,30 @@
 import express from 'express'
+// invoice controller
+import { getAllInvoicesByVendor, getInvoiceById, createInvoiceForVendor, updateInvoiceForVendor, deleteInvoiceForVendor } from '../controllers/invoicesController.js'
 
-const router = express.Router()
-
+// mergeParams allows access to vendorId from the parent route vendorsRoutes.js
+const invoiceRouter = express.Router({mergeParams: true})
 
 // get all invoices for a specific vendor
-router.get('/:vendorId/invoices', getAllInvoices)
+invoiceRouter.get('/', getAllInvoicesByVendor)
 
-// fetch a specific singular invoice in a vendor
-router.get('/:vendorId/invoices/:invoicesId', getInvoiceById)
+// get a single invoice for a specific vendor
+invoiceRouter.get('/:invoiceId', getInvoiceById)
 
-// create an invoice 
-router.post('/:vendorId/invoices', createAnInvoice)
+// create an invoice for a specific vendor  
+invoiceRouter.post('/', createInvoiceForVendor)
 
-// update an invoice
-router.put('/:vendorId/invoices/:invoiceId', updateAnInvoice)
 
-// delete an invoice
-router.delete('/:vendorId/invoice/:invoiceId', deleteAnInvoice)
+// update an invoice for a specific vendor
+invoiceRouter.put('/:invoiceId', updateInvoiceForVendor)
 
-export default router
+// delete an invoice for a specific vendor
+invoiceRouter.delete('/:invoiceId', deleteInvoiceForVendor)
+
+
+    
+    
+    
+
+
+export default invoiceRouter
