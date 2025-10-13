@@ -15,15 +15,20 @@ const App = () => {
   return (
     <div data-theme='nord'>
         <Routes>
-          {/* VENDORS */}
+        {/* VENDOR ROUTES */}
+          {/* displays all vendors */}
           <Route path='/vendors' element={<VendorHomepage />} />
+          {/* page to create a vendor */}
           <Route path='/create-vendor' element={<VendorCreatePage/>} />
-          <Route path='/vendors/:vendorId/vendor-details' element={<VendorDetailPage />} />
+          {/* displays all details for under a vendor id */}
+          <Route path='/vendors/:vendorId/vendor-details' element={<VendorDetailPage />} /> 
           {/* <Route path='/vendor/:vendorId' element={<EditVendorDetailsPage/>} /> */}
 
 
-          {/* INVOICES */}
+        {/* INVOICE ROUTES */}
+          {/* displays all invoices under a vendor id */}
           <Route path='/vendors/:vendorId/invoices' element={<InvoiceHomePage />} />
+          {/* page to create an invoice for a vendor */}
           <Route path='/vendors/:vendorId/create-invoice' element={<InvoiceCreatePage />} />
         </Routes>
     </div>

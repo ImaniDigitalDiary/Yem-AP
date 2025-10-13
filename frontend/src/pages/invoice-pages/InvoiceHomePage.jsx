@@ -61,7 +61,7 @@ const InvoiceHomePage = () => {
 
         {/* if invoices length is greater than 0, return InvoiceTable component */}
         {invoices.length > 0 && (
-          <VendorInvoiceTable invoices={invoices} setInvoices={invoices}/>
+          <VendorInvoiceTable invoices={invoices} setInvoices={setInvoices}/>
         )}
 
       </div>

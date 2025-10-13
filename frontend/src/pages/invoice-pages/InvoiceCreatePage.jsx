@@ -1,89 +1,56 @@
-import React, { useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router'
+import { useEffect, useState } from 'react'
 import axiosAPI from '../../lib/axios'
-import toast from 'react-hot-toast'
+import { useParams, useNavigate } from 'react-router'
+
 const InvoiceCreatePage = () => {
-  // INVOICE INFO 
+  const [vendor, setVendor] = useState(null)
   const [invoiceNumber, setInvoiceNumber] = useState('')
   const [invoiceUnits, setInvoiceUnits] = useState('')
-  // const [vendorName, setVendorName] = useState('')
-
-  // LOADING STATE
-  const [loading, setLoading] = useState(false) // false by default, once the form is submitted, it'll equal to true
-
-  // useNavigate hook
-  const navigate = useNavigate()
-
-  // param
+  
+  // grab vendorId
   const {vendorId} = useParams()
 
-  const handleInvoiceSubmit = async (e) => {
-    e.preventDefault()
-
-    setLoading(true)
+  // navigation
+  const navigate = useNavigate()
+  
+  // fetch the vendor id that is creating the invoice
+  useEffect(() => {
+    const fetchVendor = async () => {
       try {
-        await axiosAPI.post(`/vendors/${vendorId}/invoices`, {
-          invoiceNumber,
-          invoiceUnits
-        })
-        toast.success('Invoice created successfully')
-        navigate(`/vendors/${vendorId}/invoices`)
+        // get vendor by id
+        const response = await axiosAPI.get(`/vendors/${vendorId}`)
+        // store the fetched vendor in the vendor state
+        setVendor(response.data)
       } catch (error) {
-          console.log('Error creating invoice', error)
-          toast.error('Failed to create invoice')
-      } finally {
-        setLoading(false)
+        console.log('Error fetching vendor', error)
       }
-      console.log(invoiceNumber)
-      console.log(invoiceUnits)
-  }
+    }
+    if (vendorId) {
+      fetchVendor()
+    }
+  }, [vendorId])
+
+ const handleCreateInvoice = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axiosAPI.post(`/vendors/${vendorId}/invoices`, {
+        invoiceNumber,
+        invoiceUnits
+      })
+      console.log('Invoice created successfully', response.data)
+      toast.success('Invoice created successfully')
+      // once the invoice is created successfully, navigate back to it's vendor details page
+      navigate(`/vendors/${vendorId}/vendor-details`)
+    } catch (error) {
+      console.log('Error creating invoice', error)
+      toast.error('Failed to create invoice')
+    }
+ }
+
 
   return (
-    <div className='min-h-screen bg-base-200'>
-      {/* card */}
-      <div className='card bg-base-100'>
-        <div className='card-body'>
-          <h2 className='card-title text-2xl mb-4'>
-            Create Invoice For Vendor
-          </h2>
-          {/* FORM */}
-          <form onSubmit={handleInvoiceSubmit} id='invoiceForm'>
-{/* FORM - INVOICE INFO */}
-            <div className='flex justify-around'>
-              {/* invoice number */}
-              <div className='form-control mb-4 invoiceNumber'>
-                <label className='label'>Invoice#</label>
-                <input
-                value={invoiceNumber}
-                onChange={(e) => setInvoiceNumber(e.target.value)} //update state to targeted value
-                className='input input-bordered'
-                type="text" 
-                />
-              </div>
-              <div className='form-control mb-4 invoiceUnits'>
-                <label className='label'>Invoice Units</label>
-                <input
-                  value={invoiceUnits}
-                  onChange={(e) => setInvoiceUnits(e.target.value)}
-                  className='input input-bordered'
-                  type="text" 
-                />
-              </div>
-
-              <div className='card-actions justify-end'>
-                <button
-                  onClick={() => navigate(`/vendors/${vendorId}/invoices`)}
-                  type='submit' className='btn btn-primary createInvoiceSubmitBtn' disabled={loading}>
-                  {loading ? 'Creating...' : 'Create Invoice'}
-                </button>
-              </div>
-  
-
-            </div>
-          </form>
-
-        </div>
-      </div>
+    <div>
+      Create an invoice for {vendor?.vendorName}
     </div>
   )
 }
