@@ -91,9 +91,12 @@ export async function deleteAVendor (req, res) {
 export async function searchVendors(req, res) {
     try { 
         const {searchVendorsQuery} = req.query
-        const findVendor = await Vendor.find({vendorName: {$regex: searchVendorsQuery, $options: 'i'}})
+        const findVendor = await Vendor.find({
+            vendorName: {$regex: searchVendorsQuery, $options: 'i'}
+        })
         // if no vendors are found, return a 404 status code and a message 
-        if (!findVendor) return res.status(404).json({message: 'No vendors found matching the search query'})
+        // Mongoose .find() returns an array of documents, so we use.length to check if the array is empty. 
+        if (findVendor.length === 0) return res.status(404).json({message: 'No vendors found matching the search query'})
             // if else, return a 200 status code and the found vendor(s)
             res.status(200).json(findVendor)
     } catch (error) {
