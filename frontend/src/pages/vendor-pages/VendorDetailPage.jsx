@@ -43,11 +43,7 @@ const VendorDetailPage = () => {
     <p>Contact Role: {vendor.contactRole}</p>
     <p className='mb-10'>Tax ID: {vendor.taxId}</p>
 
-    <Link 
-        to={`/vendors/${vendorId}/invoices`} 
-        state={{vendor}}
-        className='viewInvoicesBtn  bg-slate-400 p-4 rounded-lg'
-    >
+    <Link to={`/vendors/${vendor._id}/invoices`} state={{vendor}} className='viewInvoicesBtn  bg-slate-400 p-4 rounded-lg'>
         View Invoices
     </Link>
 </div>

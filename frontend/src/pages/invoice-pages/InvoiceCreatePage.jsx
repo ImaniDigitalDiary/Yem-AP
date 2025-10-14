@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axiosAPI from '../../lib/axios'
 import { useParams, useNavigate } from 'react-router'
+import toast from'react-hot-toast'
 
 const InvoiceCreatePage = () => {
   const [vendor, setVendor] = useState(null)
@@ -18,7 +19,8 @@ const InvoiceCreatePage = () => {
     const fetchVendor = async () => {
       try {
         // get vendor by id
-        const response = await axiosAPI.get(`/vendors/${vendorId}`)
+        const response = await axiosAPI.get
+        // const response = await axiosAPI.get(`/vendors/${vendorId}`)
         // store the fetched vendor in the vendor state
         setVendor(response.data)
       } catch (error) {
@@ -49,8 +51,38 @@ const InvoiceCreatePage = () => {
 
 
   return (
-    <div>
-      Create an invoice for {vendor?.vendorName}
+    <div className='createInvoiceContainer container mx-auto p-4'>
+      <h1 className='text-2xl font-bold mb-4'>Create an invoice for {vendor?.vendorName}</h1>
+      <form onSubmit={handleCreateInvoice} className='space-y-4'>
+        <div>
+          <label htmlFor="invoiceNumber" className='block text-sm font-medium text-gray-700'>Invoice Number</label>
+          <input 
+            type="text" 
+            value={invoiceNumber} 
+            id="invoiceNumber" 
+            onChange={(e) => setInvoiceNumber(e.target.value)}
+            className='input input-bordered w-full max-w-xs'
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="invoiceUnits" className='block text-sm font-medium text-gray-700'>Invoice Units</label>
+          <input 
+            type="number" 
+            value={invoiceUnits} 
+            id="invoiceUnits" 
+            onChange={(e) => setInvoiceUnits(e.target.value)}
+            className='input input-bordered w-full max-w-xs'
+            required
+          />
+        </div>
+        <button
+          type='submit'
+          className='btn btn-primary'
+        >
+          Create Invoice
+        </button>
+      </form>
     </div>
   )
 }
