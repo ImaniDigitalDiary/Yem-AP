@@ -23,9 +23,10 @@ const App = () => {
           <Route path='/create-vendor' element={<VendorCreatePage/>} />
           {/* displays all details for under a vendor id */}
           <Route path='/vendors/:vendorId/vendor-details' element={<VendorDetailPage />} /> 
-          {/* page to view a single invoice detail */}
-          {/* <Route path='/vendors/:vendorId/invoices/:invoiceId' element={<InvoiceDetailPage />} /> */}
-          {/* <Route path='/vendor/:vendorId' element={<EditVendorDetailsPage/>} /> */}
+          {/* page to edit a vendor */}
+          <Route path='/vendors/:vendorId/edit-vendor' element={<EditVendorDetailsPage/>} />
+          
+          
 
 
         {/* INVOICE ROUTES */}
@@ -33,7 +34,9 @@ const App = () => {
           <Route path='/vendors/:vendorId/invoices' element={<InvoiceHomePage />} />
           {/* page to create an invoice for a vendor */}
           <Route path='/vendors/:vendorId/create-invoice' element={<InvoiceCreatePage />} />
-          
+
+          {/* page to view a single invoice detail */}
+          {/* <Route path='/vendors/:vendorId/invoices/:invoiceId' element={<InvoiceDetailPage />} /> */}
         </Routes>
     </div>
   )

@@ -1,12 +1,33 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, useParams } from 'react-router'
 
+// TOAST
+import toast from'react-hot-toast'
 
+// AXIOS API ROUTES
+import axiosAPI from '../../lib/axios'
 
 // ICONS
 import { PenSquareIcon, Trash2Icon } from 'lucide-react'
 
-const VendorsTable = ({vendors}) => {
+const VendorsTable = ({vendors, setVendors}) => {
+    // handleDeleteVendor fxn
+    const handleDeleteVendor = async (vendorId) => {
+        // confirm the vendor deletion
+        if (!window.confirm('Are you sure you want to delete this vendor?')) 
+            return
+        try {
+            // fetch vendor by vendorId and delete it
+            await axiosAPI.delete(`/vendors/${vendorId}`)
+            // update the state to remove the deleted vendor from the state (UI)
+            setVendors(vendors.filter((vendor) => vendor._id !== vendorId))
+            toast.success('Vendor deleted successfully')
+        } catch (error) {
+            console.log('Error deleting vendor', error)
+            toast.error('Failed to delete vendor')
+        }
+    }
+
   return (
     <div className='relative overflow-x-auto shadow-md sm:rounded-lg m-5'>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
@@ -29,7 +50,9 @@ const VendorsTable = ({vendors}) => {
                                 <button>
                                     <PenSquareIcon />
                                 </button>
-                                <button>
+                                <button
+                                    onClick={() => handleDeleteVendor(vendor._id)}
+                                >
                                     <Trash2Icon />
                                 </button>
                             </div>
