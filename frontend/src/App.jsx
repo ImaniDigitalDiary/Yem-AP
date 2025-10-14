@@ -24,7 +24,7 @@ const App = () => {
           {/* displays all details for under a vendor id */}
           <Route path='/vendors/:vendorId/vendor-details' element={<VendorDetailPage />} /> 
           {/* page to edit a vendor */}
-          <Route path='/vendors/:vendorId/edit-vendor' element={<EditVendorDetailsPage/>} />
+          <Route path='/vendors/:vendorId/edit-vendor-details' element={<EditVendorDetailsPage/>} />
           
           
 

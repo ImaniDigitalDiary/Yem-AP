@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useParams } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 // TOAST
 import toast from'react-hot-toast'
@@ -11,6 +11,20 @@ import axiosAPI from '../../lib/axios'
 import { PenSquareIcon, Trash2Icon } from 'lucide-react'
 
 const VendorsTable = ({vendors, setVendors}) => {
+    const naviagte = useNavigate()
+
+    // handleEditVendorDetails fxn
+    const handleEditVendorDetails = (vendorId) => {
+        try {
+            // naviate to the edit vendor details page for the specific vendorId that was clicked
+            naviagte(`/vendors/${vendorId}/edit-vendor-details`)
+            toast.success('Navigated to edit vendor details page')
+        } catch (error) {
+            console.log('Error navigating to edit vendor details page', error)
+            toast.error('Failed to navigate to edit vendor details page')
+        }
+    }
+
     // handleDeleteVendor fxn
     const handleDeleteVendor = async (vendorId) => {
         // confirm the vendor deletion
@@ -47,7 +61,7 @@ const VendorsTable = ({vendors, setVendors}) => {
                         <td className='pl-3'>{vendor.vendorEmail}</td>
                         <td className='flex justify-between pl-2 mr-2'>
                             <div className='pt-2'>
-                                <button>
+                                <button onClick={() => handleEditVendorDetails(vendor._id)}>
                                     <PenSquareIcon />
                                 </button>
                                 <button
