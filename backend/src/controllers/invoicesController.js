@@ -73,7 +73,8 @@ export async function createInvoiceForVendor(req, res) {
             ...req.body, //grabbing body from invoce model
             vendor: vendorId
         })
-
+    
+    
     // 3. populate the vendor info before sending back
         invoice = await invoice.populate('vendor', 'vendorName vendorEmail')
         res.status(201).json(invoice)

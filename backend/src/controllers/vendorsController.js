@@ -1,5 +1,6 @@
 // import vendorModel from '../models/Vendor.js'
 import Vendor from '../models/vendorModel.js'
+import Invoice from '../models/invoiceModel.js'
 
 // fxn to get all vendors
 export async function getAllVendors (_,res) { //using an _ instead of req when declared but value is never read
@@ -13,15 +14,17 @@ export async function getAllVendors (_,res) { //using an _ instead of req when d
     }
 }
 
+
+// fxn to get a specific vendor by ID
 export async function getVendorById(req, res) {
     try { 
+        const vendorId = req.params.vendorId  // access parameter from the URL
         //check to see if vendor exists
         const vendor = await Vendor.findById(req.params.vendorId)
         if(!vendor) {
             return res.status(404).json({message: 'Vendor not found!'})
-        } else {
-            res.json(vendor)
-        }
+        } 
+        res.status(200).json(vendor)  // return the vendor object if it exists
     } catch (error) {
         console.error('Error in getVendorById controller', error)
         res.status(500).json({message: 'Internal server error'})
@@ -77,6 +80,24 @@ export async function deleteAVendor (req, res) {
         res.status(200).json({message: 'Vendor deleted successfully'})
     } catch (error) {
         console.error('Error in deleteAVendor controller', error)
+        res.status(500).json({message: 'Internal server error'})
+    }
+}
+
+
+
+
+// SEARCH FEATURE - fxn to search through vendors
+export async function searchVendors(req, res) {
+    try { 
+        const {searchVendorsQuery} = req.query
+        const findVendor = await Vendor.find({vendorName: {$regex: searchVendorsQuery, $options: 'i'}})
+        // if no vendors are found, return a 404 status code and a message 
+        if (!findVendor) return res.status(404).json({message: 'No vendors found matching the search query'})
+            // if else, return a 200 status code and the found vendor(s)
+            res.status(200).json(findVendor)
+    } catch (error) {
+        console.error('Error in searchVendors controller', error)
         res.status(500).json({message: 'Internal server error'})
     }
 }
