@@ -40,15 +40,17 @@ const VendorHomepage = () => {
       <VendorNavbar />
       <div className='searchAndListDiv flex flex-col'>
         <div className='mt-4 ml-auto mr-5'>
-          <VendorSearch/>
+          {/* setVendors now in VendorSearch because this is where the vendor list will update (as  search goes, list will update) */}
+          <VendorSearch setVendors={setVendors}/>
         </div>
         <div>
           {/* if vendors array length is equal to 0, then render VendorsNotFound component */}
           {vendors.length === 0 && <VendorsNotFound/> }
 
           {/* if vendors array length is greater than 0, then map through the vendor array then return the vendor table with vendors  */}
+          {/* original code: <VendorsTable vendors={vendors} setVendors={setVendors} />  -- removed setVendors and put to VendorSearch  vendors={vendors} stays to display vendors after the search*/}
           {vendors.length > 0 && (
-                <VendorsTable vendors={vendors} setVendors={setVendors} />
+                <VendorsTable vendors={vendors} /> 
               )}
         </div>
       </div>

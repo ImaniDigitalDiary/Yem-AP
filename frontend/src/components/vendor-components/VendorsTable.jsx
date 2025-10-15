@@ -18,7 +18,7 @@ const VendorsTable = ({vendors, setVendors}) => {
         try {
             // naviate to the edit vendor details page for the specific vendorId that was clicked
             naviagte(`/vendors/${vendorId}/edit-vendor-details`)
-            toast.success('Navigated to edit vendor details page')
+            // toast.success('Navigated to edit vendor details page')
         } catch (error) {
             console.log('Error navigating to edit vendor details page', error)
             toast.error('Failed to navigate to edit vendor details page')
