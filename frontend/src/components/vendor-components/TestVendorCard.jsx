@@ -5,7 +5,7 @@ import { formatDate } from '../../lib/utils'
 import axiosAPI from '../../lib/axios'
 import toast from 'react-hot-toast'
 
-const VendorCard = ({vendor, setVendors, vendorName}) => {
+const VendorCard = ({vendor, setVendors, invoices}) => {
 
     const handleDelete = async (e, vendorId) => {
         e.preventDefault() // get rid of the navigation behavior or making the whole card a link and just make each icon a link

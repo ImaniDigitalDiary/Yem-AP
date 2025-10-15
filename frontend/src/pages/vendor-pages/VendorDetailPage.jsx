@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 // COMPONENTS
 import VendorsNotFound from '../../components/vendor-components/VendorsNotFound'
 import VendorNavbar from '../../components/vendor-components/VendorNavbar'
+import VendorCard from '../../components/vendor-components/VendorInfoCard'
 
 const VendorDetailPage = () => {
     const [vendor, setVendor] = useState(null)
@@ -28,25 +29,68 @@ const VendorDetailPage = () => {
         fetchVendor()
     }, [vendorId])
 
-    // if fendor is not found, load VendorNotFound comp
+    // if vendor is not found, load VendorNotFound comp
     if (!vendor) return <VendorsNotFound />
   return (
    <div>
     <VendorNavbar />
 
-    <div className='vendorDetails m-20 p-10 shadow-md bg-white rounded '>
-    <h2 className='text-2xl font-bold mb-3'>{vendor.vendorName}</h2>
-    <p>Email: {vendor.vendorEmail}</p>
-    <p>Vendor Name: {vendor.vendorName}</p>
-    <p>dba Name: {vendor.dbaName}</p>
-    <p>Primary Contact: {vendor.primaryContact}</p>
-    <p>Contact Role: {vendor.contactRole}</p>
-    <p className='mb-10'>Tax ID: {vendor.taxId}</p>
+    {/* center card middle of page */}
+    <div className='flex items-center justify-center'> 
+        <div className='flex flex-col vendorDetails w-full border border-gray-500 rounded-3xl shadow-xl  m-20 p-10  bg-slate-400 '>
+            <h2 className='text-2xl font-bold mb-3 uppercase'>{vendor.vendorName}</h2>
 
-    <Link to={`/vendors/${vendor._id}/invoices`} state={{vendor}} className='viewInvoicesBtn  bg-slate-400 p-4 rounded-lg'>
-        View Invoices
-    </Link>
-</div>
+            <div className='flex flex-row gap-7 row1'>
+                <div className='dbaName'>
+                    <h1>Vendor dba Name</h1>
+                    <div className='bg-slate-700 text-xl text-gray-300 px-3 py-5'>{vendor.dbaName}</div>
+                </div>
+                <div className='taxId'>
+                    <h1>Tax ID</h1>
+                    <div className='bg-slate-700   text-xl text-gray-300 px-3 py-5'>{vendor.taxId}</div>
+                </div>
+            </div>
+
+            <div className='flex flex-row gap-7 row2'>
+                <div className='vendorAddress'>
+                    <h1>Vendor Address</h1>
+                    <div className='bg-slate-700 text-xl text-gray-300 px-3 py-5'>{vendor.vendorAddress}</div>
+                </div>
+            </div>
+
+            <div className='flex flex-row gap-7 row3'>
+                <div className='primContactName'>
+                    <h1>Primary Contact</h1>
+                    <div className='bg-slate-700 text-xl text-gray-300 px-3 py-5'>{vendor.primaryContact}</div>
+                </div>
+                <div className='contactRole'>
+                    <h1>Contact Role</h1>
+                    <div className='bg-slate-700 text-xl text-gray-300 px-3 py-5'>{vendor.contactRole}</div>
+                </div>
+            </div>
+
+
+             <div className='flex flex-row gap-7 row3'>
+                <div className='achEmail'>
+                    <h1>ACH Email</h1>
+                    <div className='bg-slate-700  text-xl text-gray-300 px-3 py-2'>{vendor.vendorEmail}</div>
+                </div>
+                <div className='phoneNumber'>
+                    <h1>Phone Number</h1>
+                    <div className='bg-slate-700  text-xl text-gray-300 px-3 py-5'>{vendor.phoneNumber}</div>
+                </div>
+            </div>
+
+            
+                
+                <Link to={`/vendors/${vendor._id}/invoices`} state={{vendor}} className='viewInvoicesBtn  bg-slate-400 p-4 rounded-lg'>
+                    View Invoices
+                </Link>
+
+          
+            
+        </div>
+    </div>
    </div>
   )
 }

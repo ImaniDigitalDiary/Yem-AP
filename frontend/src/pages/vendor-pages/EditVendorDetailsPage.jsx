@@ -35,7 +35,7 @@ const EditVendorDetailsPage = () => {
 
   const handleDelete = async () => {
     if(!window.confirm(`Are you sure you want to delete vendor ${vendor.vendorName} ?`))
-    return
+      return
     try {
         await axiosAPI.delete(`/vendors/${vendorId}`)
         toast.success(`Vendor ${vendor.vendorName} deleted`)
@@ -50,7 +50,11 @@ const EditVendorDetailsPage = () => {
     if (!vendor.vendorName.trim() || !vendor.vendorEmail.trim()) {
     toast.error('Please fill in all inputs')
     return;
-    }
+    } 
+
+    // when submit button is clicked, display a confirmation dialog to the user to confirm in window if use wants to update vendor before continuing with the save
+    if (!window.confirm(`Are you sure you want to update vendor ${vendor.vendorName}?`)) 
+      return
     
     setSaving(true) 
     try {
