@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import VendorsNotFound from '../../components/vendor-components/VendorsNotFound'
 import VendorNavbar from '../../components/vendor-components/VendorNavbar'
 import VendorCard from '../../components/vendor-components/VendorInfoCard'
+import VendorInfoCard from '../../components/vendor-components/VendorInfoCard'
 
 const VendorDetailPage = () => {
     const [vendor, setVendor] = useState(null)
@@ -86,11 +87,11 @@ const VendorDetailPage = () => {
                 <Link to={`/vendors/${vendor._id}/invoices`} state={{vendor}} className='viewInvoicesBtn  bg-slate-400 p-4 rounded-lg'>
                     View Invoices
                 </Link>
-
-          
             
         </div>
     </div>
+
+    <VendorInfoCard />
    </div>
   )
 }
