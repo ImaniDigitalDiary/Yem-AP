@@ -29,7 +29,7 @@ const VendorInfoCard = ({vendor}) => {
       </h2>
 
       {/* GRID FOR A 2 COL LAYOUT */}
-      <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
+      {/* <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
         {vendorInfoGroups.map((vendorInfoGroupItem, index) => (
           <div key={index} className='flex flex-col'>
             <span className='font-semibold text-slate-900 mb-1'>
@@ -39,7 +39,25 @@ const VendorInfoCard = ({vendor}) => {
               {vendorInfoGroupItem.value || '-'}
             </div>
           </div>
+        ))} */}
+
+        {vendorInfoGroups.map((group, i) => (
+          <div key={i} className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+            {group.map((info, j) => (
+              <div key={j} className='flex flex-col'>
+                <span className='font-semibold text-slate-900 mb-1'>
+                  {info.label}
+                </span>
+                <div>
+                  {info.value || '-'}
+                </div>
+              </div>
+            ))}
+          </div>
         ))}
+
+        
+         
 
         {/* LINK TO VENDOR ID INVOICES */}
         <div>
@@ -52,8 +70,6 @@ const VendorInfoCard = ({vendor}) => {
           </Link>
         </div>
       </div>
-      
-    </div>
   )
 }
 

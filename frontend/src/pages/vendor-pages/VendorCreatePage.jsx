@@ -11,11 +11,11 @@ const VendorCreatePage = () => {
   // BASIC VENDOR INFO
   const [vendorName, setVendorName] = useState('')
   const [dbaName, setDbaName] = useState('')
-  const [vendorType, setVendorType] = useState('')
+  const [vendorAddress, setVendorAddress] = useState('')
   const [taxId, setTaxId] = useState('')
   // CONTACT INFO
-  const [primContact, setPrimContact] = useState('')
-  const [contactRole, setCoontactRole] = useState('')
+  const [primaryContact, setPrimaryContact] = useState('')
+  const [contactRole, setContactRole] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [vendorEmail, setVendorEmail] = useState('')
 
@@ -29,16 +29,22 @@ const VendorCreatePage = () => {
     e.preventDefault() //avoid paid refresh on submit
 
     // validation - if vendor name or if vendor email is not provided, throw an error - .trim() to avoid an empty value
-    if(!vendorName.trim() || !vendorEmail.trim()) {
-      toast.error('All fields are required')
-      return;
-    }
+    // if(!vendorName.trim() || !vendorEmail.trim()) {
+    //   toast.error('All fields are required')
+    //   return;
+    // }
     
     setLoading(true) 
       try {
         await axiosAPI.post('/vendors', {
           vendorName,
-          vendorEmail
+          dbaName,
+          vendorAddress,
+          taxId,
+          primaryContact,
+          contactRole,
+          vendorEmail,
+          phoneNumber
         })
         toast.success('Vendor created successfully')
         navigate('/vendors')
@@ -81,7 +87,7 @@ const VendorCreatePage = () => {
                       type="text"  
                       placeholder='Vendor Name' 
                       className='input input-bordered'
-                      name="" id="" />
+                      name="vendorName" id="vendorName" />
                   </div>
                   {/* DBA NAME */}
                   <div className='form-control mb-4'>
@@ -94,7 +100,7 @@ const VendorCreatePage = () => {
                       type="text"  
                       placeholder='dba Name' 
                       className='input input-bordered'
-                      name="" id="" />
+                      name="dbaName" id="dbaName" />
                   </div>
                 </div>
                 {/* vendor type & tax id flex container */}
@@ -102,15 +108,15 @@ const VendorCreatePage = () => {
                   {/* VENDOR TYPE  - RADIO DROPDOWN*/}
                   <div className='form-control mb-4'>
                     <label htmlFor="" className='label'>
-                      <span className='label-text'>Vendor Type</span>
+                      <span className='label-text'>Vendor Address</span>
                     </label>
                     <input 
-                      value={vendorType}
-                      onChange={(e) => setVendorType(e.target.value)} //update state
+                      value={vendorAddress}
+                      onChange={(e) => setVendorAddress(e.target.value)} //update state
                       type="text"  
-                      placeholder='will be a dropdown**' 
+                      placeholder='123 Smile Lane, Suite 200, New York, NY 10001' 
                       className='input input-bordered'
-                      name="" id="" />
+                      name="vendorAddress" id="vendorAddress" />
                   </div>
                   {/* TAX ID */}
                   <div className='form-control mb-4'>
@@ -123,7 +129,7 @@ const VendorCreatePage = () => {
                       type="text"  
                       placeholder='Tax ID' 
                       className='input input-bordered'
-                      name="" id="" />
+                      name="taxId" id="taxId" />
                   </div>
                 </div>
 {/* END: BASIC VENDOR INFO  */}  
@@ -137,12 +143,12 @@ const VendorCreatePage = () => {
                       <span className='label-text'>Primary Contact</span>
                     </label>
                     <input 
-                      value={primContact}
-                      onChange={(e) => setPrimContact(e.target.value)} //update state
+                      value={primaryContact}
+                      onChange={(e) => setPrimaryContact(e.target.value)} //update state
                       type="text"  
                       placeholder='Primary Contact' 
                       className='input input-bordered'
-                      name="" id="" />
+                      name="primaryContact" id="primaryContact" />
                   </div>
                   {/* CONTACT ROLE */}
                   <div className='form-control mb-4'>
@@ -151,11 +157,11 @@ const VendorCreatePage = () => {
                     </label>
                     <input 
                       value={contactRole}
-                      onChange={(e) => setCoontactRole(e.target.value)} //update state
+                      onChange={(e) => setContactRole(e.target.value)} //update state
                       type="text"  
                       placeholder='Contact Role' 
                       className='input input-bordered'
-                      name="" id="" />
+                      name="contactRole" id="contactRole" />
                   </div>
                 </div>
                 {/* phone number & vendor email flex container */}
@@ -171,7 +177,7 @@ const VendorCreatePage = () => {
                       type="text"  
                       placeholder='Phone Number' 
                       className='input input-bordered'
-                      name="" id="" />
+                      name="phoneNumber" id="phoneNumber" />
                   </div>
                   {/* VENDOR EMAIL */}
                   <div className='form-control mb-4'>
@@ -184,7 +190,7 @@ const VendorCreatePage = () => {
                       type="text"  
                       placeholder='Vendor Email' 
                       className='input input-bordered'
-                      name="" id="" />
+                      name="vendorEmail" id="vendorEmail" />
                   </div>
                 </div>
 
