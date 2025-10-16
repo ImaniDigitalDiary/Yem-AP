@@ -33,11 +33,21 @@ const VendorDetailPage = () => {
     // if vendor is not found, load VendorNotFound comp
     if (!vendor) return <VendorsNotFound />
   return (
-   <div>
-    <VendorNavbar />
+    <div className='min-h-screen bg-slate-200'>
+        <VendorNavbar />
+        <div className='flex items-center justify-center py-10'>
+            <VendorInfoCard vendor={vendor} />
+        </div>
+    </div>
 
-    {/* center card middle of page */}
-    <div className='flex items-center justify-center'> 
+    
+  )
+}
+
+export default VendorDetailPage
+
+{/* center card middle of page */}
+    {/* <div className='flex items-center justify-center'> 
         <div className='flex flex-col vendorDetails w-full border border-gray-500 rounded-3xl shadow-xl  m-20 p-10  bg-slate-400 '>
             <h2 className='text-2xl font-bold mb-3 uppercase'>{vendor.vendorName}</h2>
 
@@ -90,10 +100,4 @@ const VendorDetailPage = () => {
             
         </div>
     </div>
-
-    <VendorInfoCard />
-   </div>
-  )
-}
-
-export default VendorDetailPage
+   </div> */}
