@@ -5,13 +5,15 @@ const invoiceSchema = new mongoose.Schema({
         type: String
     },
     invoiceUnits: {
-        type: Number
+        type: String
     },
     // ObjectId is helping the invoice point to the vendor and saying 'hey i belong to this vendorName ...'
-    vendorName: {
+    vendor: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'vendorName'
-    }
+        ref: 'Vendor',
+        required: true //ensure every invoice always belongs to a vendor
+    },
+
 }, {timestamps: true})
 
 

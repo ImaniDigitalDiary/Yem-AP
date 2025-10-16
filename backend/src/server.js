@@ -1,12 +1,16 @@
 // PACKAGING IMPORTS
+import dns from 'dns'
+dns.setDefaultResultOrder('ipv4first')
 import express from 'express'
 import cors from 'cors'
 
 // ROUTES
 import vendorRoutes from './routes/vendorsRoutes.js'
+// import invoiceRoutes from './routes/invoicesRoutes.js'
+
 import { connectDB } from './config/db.js'
 import dotenv from 'dotenv'
-import rateLimiter from './middleware/rateLimiter.js'
+// import rateLimiter from './middleware/rateLimiter.js'
 
 
 
@@ -26,7 +30,7 @@ app.use(
 // app.use to add middleware
 app.use(express.json()) // this middleware will parson the JSON bodies: req.body (get access to req.body) without this middleware, my req will come out as undefined
 // Redis ratelimit middleware
-app.use(rateLimiter)
+// app.use(rateLimiter)
 
 
 
@@ -40,6 +44,10 @@ app.use(rateLimiter)
 // vendor api routes
 app.use('/api/vendors', vendorRoutes)
 
+// *** IMPORTANT FOR NESTED ROUTES
+// ensures that requests to /api/vendors/:vendorId/invoices will be handled by the invoicesRoutes
+//  & that mergeParams in invoiceRoutes will work correctly
+// app.use('/api/vendors/:vendorId/invoices', invoiceRoutes)
 
 // call the connectdb method to connect to mongodb, once it's connected then listen on PORT
 connectDB().then(() => {

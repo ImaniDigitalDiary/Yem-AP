@@ -34,8 +34,8 @@ export async function getVendorById(req, res) {
 // fxn to create a vendor
 export async function createAVendor (req,res) {
     try {
-        const {vendorName, dbaName, vendorType, taxId, primaryContact, contactRole, phoneNumber, vendorEmail} = req.body
-        const vendor = new Vendor({vendorName, dbaName, vendorType, taxId, primaryContact, contactRole, phoneNumber, vendorEmail, })
+        const {vendorName, dbaName, vendorAddress, taxId, primaryContact, contactRole, phoneNumber, vendorEmail} = req.body
+        const vendor = new Vendor({vendorName, dbaName, vendorAddress, taxId, primaryContact, contactRole, phoneNumber, vendorEmail, })
 
         const savedVendor = await vendor.save()
         res.status(201).json(savedVendor)
@@ -52,7 +52,15 @@ export async function updateAVendor (req,res)  {
         const {vendorName, vendorEmail} = req.body //will give us some data 
         const updatedVendor = await Vendor.findByIdAndUpdate(
             req.params.vendorId, 
-            {vendorName, vendorEmail},
+            {
+                vendorName, 
+                vendorEmail,
+                phoneNumber,
+                contactRole,
+                primaryContact, 
+                vendorAddress,
+                taxId
+            },
             {
                 new: true //ensure that the modified document is returned in the callback or promise. without new: true, would typically return the original unmodofied docuemtn by default
             },
@@ -71,7 +79,15 @@ export async function deleteAVendor (req, res) {
         const {vendorName, vendorEmail} = req.body 
         const deletedVendor = await Vendor.findByIdAndDelete(
             req.params.vendorId,
-            {vendorName, vendorEmail},
+            {
+                vendorName, 
+                vendorEmail,
+                phoneNumber,
+                contactRole,
+                primaryContact, 
+                vendorAddress,
+                taxId
+            },
             {
                 new: true,
             }
@@ -90,13 +106,24 @@ export async function deleteAVendor (req, res) {
 // SEARCH FEATURE - fxn to search through vendors
 export async function searchVendors(req, res) {
     try { 
-        const {searchVendorsQuery} = req.query
+        const {search} = req.query
+        // if no search query provided, return all vendors
+        if (!search) {
+            const allVendors = await Vendor.find().sort({createdAt: -1})
+            res.status(200).json(allVendors)
+        }
+        // search for vendors by vendorName or vendorEmail
         const findVendor = await Vendor.find({
-            vendorName: {$regex: searchVendorsQuery, $options: 'i'}
+            $or: [
+                {vendorName: {$regex: search, $options: 'i'}},
+                {vendorEmail: {$regex: search, $options: 'i'}}  // 'i' makes the search case-insensitive (uppercase and lowercase letters are treated the same)  $options: 'i' is for regex options to make it case-insensitive
+            ]
         })
         // if no vendors are found, return a 404 status code and a message 
         // Mongoose .find() returns an array of documents, so we use.length to check if the array is empty. 
-        if (findVendor.length === 0) return res.status(404).json({message: 'No vendors found matching the search query'})
+        if (findVendor.length === 0) {
+            return res.status(404).json({message: 'No vendors found matching the search query'})
+        }
             // if else, return a 200 status code and the found vendor(s)
             res.status(200).json(findVendor)
     } catch (error) {
