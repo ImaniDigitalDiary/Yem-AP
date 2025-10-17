@@ -1,7 +1,12 @@
 import React from 'react'
+import { Link, useParams } from 'react-router'
+
+// COMPONENTS
 import InvoicesNotFound from '../invoice-components/InvoicesNotFound'
 
-import { Link, useParams } from 'react-router'
+// ICONS
+import { House } from 'lucide-react'
+
 const VendorInfoCard = ({vendor}) => {
   if (!vendor) return <InvoicesNotFound />
 
@@ -26,17 +31,20 @@ const VendorInfoCard = ({vendor}) => {
   return (
 
       // <div className='flex flex-col'>
-        <div className='w-full max-w-3xl mx-10  border-gray-400 rounded-3xl shadow-xl bg-slate-400 p-10 px-20'>
-          <div className='vendorDetailNav flex flex-row gap-4 mx-12 justify-end font-thin'>
+        <div className='w-full max-w-3xl mx-10  border-4 border-slate-500 rounded-3xl shadow-2xl bg-slate-400 p-10 px-8'>
+          <div className='vendorDetailNav flex flex-row gap-4 justify-end font-thin'>
             {/* Link to Edit Vendor Details */}
             <Link 
               to={`/vendors/${vendor._id}/edit-vendor-details`} 
-              className=''
+              className='hover:text-blue-800'
             >
               Edit Vendor Info
             </Link>
-            <Link to={`/vendors`}>
-            Vendors
+            <Link 
+              to={`/vendors`}
+              className='hover:text-blue-800 flex gap-1'
+            >
+              Vendors <House />
             </Link>
           </div>
           <div key={vendorId} className='text-3xl font-bold mb-8 uppercase text-gray-800 tracking-wide'>
