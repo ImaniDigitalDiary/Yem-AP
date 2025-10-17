@@ -24,50 +24,62 @@ const VendorInfoCard = ({vendor}) => {
     ],
   ]
   return (
-    <div className='w-full max-w-3xl mx-10  border-gray-400 rounded-3xl shadow-xl bg-slate-400 p-10 px-20'>
-      <div key={vendorId} className='text-3xl font-bold mb-8 uppercase text-gray-800 tracking-wide'>
-        {vendor.vendorName }
-        <br />
-        <span className='text-xl pb-3 font-thin'>
-        {/* displays the id of the vendor -would later like to update to not show mongodb id but to render in new array starting at 1 for first vendor and going upwards while still keeping mongodb id on backend */}
-         Vendor ID# <strong>{vendor?._id} </strong>
-      </span>
-      </div>
-      
 
-        {vendorInfoGroups.map((group, i) => (
-          <div key={i} className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-            {group.map((info, j) => (
-              <div key={j} className='flex flex-col'>
-                <span className='font-thin text-slate-800 mb-0 tracking-wide'>
-                  {info.label}
-                </span>
-                <div className='mb-5'>
-                  {info.value || '-'}
-                </div>
-              </div>
-            ))}
-          </div>
-        ))}
-
-        
-         
-
-        {/* LINK TO VENDOR ID INVOICES */}
-        <div className=''>
-          <div className='mt-3'>
-            <Link
-              to={`/vendors/${vendor._id}/invoices`}
-              state={{vendor}}
-              className='inline-block bg-slate-700 hover:bg-slate-800 text-white px-20 py-3 mt-3 rounded-2xl transition-all duration-200'
+      // <div className='flex flex-col'>
+        <div className='w-full max-w-3xl mx-10  border-gray-400 rounded-3xl shadow-xl bg-slate-400 p-10 px-20'>
+          <div className='vendorDetailNav flex flex-row gap-4 mx-12 justify-end'>
+            {/* Link to Edit Vendor Details */}
+            <Link 
+              to={`/vendors/${vendor._id}/edit-vendor-details`} className='inline-block bg-slate-700 hover:bg-slate-800 text-white'
             >
-              View Invoices
+              Edit Vendor Info
+            </Link>
+            <Link to={`/vendors`}>
+            Vendors
             </Link>
           </div>
-        </div>
+          <div key={vendorId} className='text-3xl font-bold mb-8 uppercase text-gray-800 tracking-wide'>
+            {vendor.vendorName }
+            <br />
+            <span className='text-xl pb-3 font-thin'>
+            {/* displays the id of the vendor -would later like to update to not show mongodb id but to render in new array starting at 1 for first vendor and going upwards while still keeping mongodb id on backend */}
+            Vendor ID# <strong>{vendor?._id} </strong>
+          </span>
+          </div>
+          
 
+            {vendorInfoGroups.map((group, i) => (
+              <div key={i} className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+                {group.map((info, j) => (
+                  <div key={j} className='flex flex-col'>
+                    <span className='font-thin text-slate-800 mb-0 tracking-wide'>
+                      {info.label}
+                    </span>
+                    <div className='mb-5'>
+                      {info.value || '-'}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+
+            
+            
+
+            {/* LINK TO VENDOR ID INVOICES */}
+            <div className=''>
+              <div className='mt-3'>
+                <Link
+                  to={`/vendors/${vendor._id}/invoices`}
+                  state={{vendor}}
+                  className='inline-block bg-slate-700 hover:bg-slate-800 text-white px-14 py-3 mt-3 rounded-2xl transition-all duration-200'
+                >
+                  View Invoices
+                </Link>
+              </div>
+            </div>
         </div>
-        
+      // </div>      
   )
 }
 
