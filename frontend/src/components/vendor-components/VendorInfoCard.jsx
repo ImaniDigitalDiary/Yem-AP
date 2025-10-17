@@ -47,7 +47,7 @@ const VendorInfoCard = ({vendor}) => {
               Vendors <House />
             </Link>
           </div>
-          <div key={vendorId} className='text-3xl font-bold mb-8 uppercase text-gray-800 tracking-wide'>
+          <div key={vendorId} className='text-3xl font-bold mb-8 mt-5 uppercase text-gray-800 tracking-wide'>
             {vendor.vendorName }
             <br />
             <span className='text-xl pb-3 font-thin'>
