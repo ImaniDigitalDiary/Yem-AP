@@ -27,10 +27,11 @@ const VendorInfoCard = ({vendor}) => {
 
       // <div className='flex flex-col'>
         <div className='w-full max-w-3xl mx-10  border-gray-400 rounded-3xl shadow-xl bg-slate-400 p-10 px-20'>
-          <div className='vendorDetailNav flex flex-row gap-4 mx-12 justify-end'>
+          <div className='vendorDetailNav flex flex-row gap-4 mx-12 justify-end font-thin'>
             {/* Link to Edit Vendor Details */}
             <Link 
-              to={`/vendors/${vendor._id}/edit-vendor-details`} className='inline-block bg-slate-700 hover:bg-slate-800 text-white'
+              to={`/vendors/${vendor._id}/edit-vendor-details`} 
+              className=''
             >
               Edit Vendor Info
             </Link>
