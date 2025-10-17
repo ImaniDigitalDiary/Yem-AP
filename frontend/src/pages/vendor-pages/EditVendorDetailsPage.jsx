@@ -51,13 +51,13 @@ const EditVendorDetailsPage = () => {
     toast.error('Please fill in all inputs')
     return;
     } 
-
     // when submit button is clicked, display a confirmation dialog to the user to confirm in window if use wants to update vendor before continuing with the save
     if (!window.confirm(`Are you sure you want to update vendor ${vendor.vendorName}?`)) 
       return
     
     setSaving(true) 
     try {
+      console.log('Data to be saved:', vendor)
       await axiosAPI.put(`/vendors/${vendorId}`, vendor)
       toast.success('Vendor updated successfully')
       navigate('/vendors')
@@ -84,9 +84,9 @@ const EditVendorDetailsPage = () => {
       <div className='container mx-auto px-4 py-8'>
         <div className='max-w-2xl mx-auto'>     
           <div className='flex items-center justify-between mb-6'>  
-            <Link to='/vendors' className='btn btn-ghost'>
+            <Link to={`/vendors/${vendorId}/vendor-details`} className='btn btn-ghost'>
               <ArrowLeftIcon className='h-5 w-5'/>
-              Back to Vendors
+              Back to Vendor
             </Link>
             {/* <button>
               <Link to='#invoicePage'>
@@ -110,9 +110,87 @@ const EditVendorDetailsPage = () => {
                   type="text"  
                   placeholder='Vendor Name' 
                   className='input input-bordered'
-                  name="" id="" />
+                  name="vendorName" id="vendorName" />
               </div>
-              {/* VENDOR EMAIL */}
+              {/* DBA NAME */}
+              <div className='form-control mb-4'>
+                <label htmlFor="" className='label'>
+                  <span className='label-text'>DBA Name</span>
+                </label>
+                <input 
+                  value={vendor.dbaName}
+                  onChange={(e) => setVendor({...vendor, dbaName: e.target.value})} //update state
+                  type="text"  
+                  placeholder='dba Name' 
+                  className='input input-bordered'
+                  name="dbaName" id="dbaName" />
+              </div>
+              {/* VENDOR ADDRESS */}
+              <div className='form-control mb-4'>
+                <label htmlFor="" className='label'>
+                  <span className='label-text'>Vendor Address</span>
+                </label>
+                <input 
+                  value={vendor.vendorAddress}
+                  onChange={(e) => setVendor({...vendor, vendorAddress: e.target.value})} //update state
+                  type="text"  
+                  placeholder='vendor Address ' 
+                  className='input input-bordered'
+                  name="vendorAddress" id="vendorAddress" />
+              </div>
+              {/* TAX ID */}
+              <div className='form-control mb-4'>
+                <label htmlFor="" className='label'>
+                  <span className='label-text'>Tax ID</span>
+                </label>
+                <input 
+                  value={vendor.taxId}
+                  onChange={(e) => setVendor({...vendor, taxId: e.target.value})} //update state
+                  type="text"  
+                  placeholder='Tax ID ' 
+                  className='input input-bordered'
+                  name="taxId" id="taxId" />
+              </div>
+              {/* PRIMARY CONTACT */}
+              <div className='form-control mb-4'>
+                <label htmlFor="" className='label'>
+                  <span className='label-text'>Primary Contact </span>
+                </label>
+                <input 
+                  value={vendor.primaryContact}
+                  onChange={(e) => setVendor({...vendor, primaryContact: e.target.value})} //update state
+                  type="text"  
+                  placeholder='Primary Contact ' 
+                  className='input input-bordered'
+                  name="primaryContact" id="primaryContact" />
+              </div>
+              {/* CONTACT ROLE */}
+              <div className='form-control mb-4'>
+                <label htmlFor="" className='label'>
+                  <span className='label-text'>Contact Role</span>
+                </label>
+                <input 
+                  value={vendor.contactRole}
+                  onChange={(e) => setVendor({...vendor, contactRole: e.target.value})} //update state
+                  type="text"  
+                  placeholder='Contact Role ' 
+                  className='input input-bordered'
+                  name="contactRole" id="contactRole" />
+              </div>
+              {/* PHONE NUMBER */}
+              <div className='form-control mb-4'>
+                <label htmlFor="" className='label'>
+                  <span className='label-text'>Phone Number</span>
+                </label>
+                <input 
+                  value={vendor.phoneNumber}
+                  onChange={(e) => setVendor({...vendor, phoneNumber: e.target.value})} //update state
+                  type="text"  
+                  placeholder='Phone Number' 
+                  className='input input-bordered'
+                  name="phoneNumber" id="phoneNumber" />
+              </div>
+              {/* ACH EMAIL */}
               <div className='form-control mb-4'>
                 <label htmlFor="" className='label'>
                   <span className='label-text'>Vendor Email</span>
@@ -123,7 +201,7 @@ const EditVendorDetailsPage = () => {
                   type="text"  
                   placeholder='Vendor Email' 
                   className='input input-bordered'
-                  name="" id="" />
+                  name="vendorEmail" id="vendorEmail" />
               </div>
               {/* UPDATE BTN */}
               <div className='card-actions justify-end'>
