@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import VendorsNotFound from './VendorsNotFound'
-import VendorHomepage from '../../pages/vendor-pages/VendorHomepage'
+
 
 // AXIOS IMPORT
 import axiosAPI from '../../lib/axios'
@@ -10,6 +9,7 @@ const VendorSearch = ({vendors, setVendors}) => { //default vendors prop is empt
   
   // fxn to fetch vendors based on search query from the backend 
   const handleSearchVendors = async (query) => {
+    console.log('Searching for vendors with query: ', query)
     try {
       const response = await axiosAPI.get(`/vendors?search=${query}`)
       setVendors(response.data)
@@ -28,12 +28,12 @@ const VendorSearch = ({vendors, setVendors}) => { //default vendors prop is empt
 
 // live search effect (debounce effect)
 useEffect(() => {
-  const delayDebounce = setTimeout(() => {
+  const delayDebounce = setTimeout (() => {
     handleSearchVendors(vendorQuery)
   }, 500)
-
+  
   return () => clearTimeout(delayDebounce)
-}, [vendorQuery])
+}, [vendorQuery, setVendors])  // useEffect will run only when vendorQuery changes
 
 
 
@@ -57,22 +57,6 @@ useEffect(() => {
           search vendors
         </button>
     </div>
-
-    {/* Search Vendors Results */}
-    {/* <div className='mt-4'>
-      {vendors && vendors.length > 0 ? (
-        <ul>
-          {vendors.map((vendor) => (
-            <li key={vendor._id} className='border-b py-2'>
-              {vendor.vendorName} - {vendor.vendorEmail}
-            </li>
-          ))}
-        </ul>
-        ) : (
-        <VendorsNotFound />
-      )}
-    </div> */}
-
   </div>
   )
 }
