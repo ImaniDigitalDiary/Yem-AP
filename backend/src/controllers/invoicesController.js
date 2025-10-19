@@ -1,6 +1,7 @@
 import Invoice from '../models/invoiceModel.js'
 import Vendor from '../models/vendorModel.js'
 
+
 // fxn to get all invoices under specific vendor
 export async function getAllInvoicesByVendor(req,res, next) {
     try {
@@ -17,6 +18,27 @@ export async function getAllInvoicesByVendor(req,res, next) {
         res.status(200).json(invoices)
     } catch (error) {
         console.error('Error in getAllInvoices controller', error)
+        res.status(500).json({message: 'Internal server error'})
+    }
+}
+
+// SEARCH FEATURE: fxn to search for invoices under specific vendor
+export async function searchInvoicesByVendor(req, res) {
+    try {
+        // grab vendorId and search query
+        const {vendorId, search} = req.query
+
+        // check to see if vendor exists
+        const vendor = await Vendor.findById(vendorId)
+        if (!vendor) return res.status(404).json({message: 'Vendor not found'})
+
+        // find invoices by going into Invoice model, finding the vendorId value from invoice models vendor key
+        // then populate only the vendorName value from the vendor key in my invoice model --> which pulls from ObjectId
+        const invoices = await Invoice.find({vendor: vendorId, $text: {$search: search}})
+           .populate('vendor', 'vendorName vendorEmail')
+        res.status(200).json(invoices)
+    } catch (error) {
+        console.error('Error in searchInvoices controller', error)
         res.status(500).json({message: 'Internal server error'})
     }
 }
