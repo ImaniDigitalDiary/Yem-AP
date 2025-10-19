@@ -7,12 +7,12 @@ import invoicesRoutes from './invoicesRoutes.js'
 
 const router = express.Router()
 
-// ** search vendors by name or email
-router.get('/search-vendors', searchVendors)
 
 // CRUD OPERATION ROUTES FOR VENDORS
 // ** get all vendors
-router.get('/', getAllVendors)
+router.get('/', searchVendors) // This will be the main route for vendors - GET ALL VENDORS - SEARCH VENDORS
+// ** search vendors by name or email - THIS ALSO HANDLES GET ALL VENDORS
+router.get('/', searchVendors)
 // ** fetch a specific singular vendor
 router.get('/:vendorId', getVendorById)
 // ** create a vendor
