@@ -19,8 +19,20 @@ const InvoiceSearch = ({invoices, setInvoices}) => {
         }
     }
   return (
-    <div>
-      
+    <div className='p-4'>
+        <input 
+            type="text" 
+            placeholder="Search for invoices..." 
+            value={invoiceQuery}
+            onChange={(e) => setInvoiceQuery(e.target.value)}
+        />
+
+        <button
+            className='btn btn-primary mt-2'
+            onClick={() => handleSearchInvoices(invoiceQuery)  }
+        >
+            Search Invoices
+        </button>
     </div>
   )
 }
