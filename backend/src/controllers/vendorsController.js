@@ -3,13 +3,43 @@ import Vendor from '../models/vendorModel.js'
 import Invoice from '../models/invoiceModel.js'
 
 // fxn to get all vendors
-export async function getAllVendors (_,res) { //using an _ instead of req when declared but value is never read
-    try {
-        // fetch all vendors - using .find() will give ALL vendors
-        const vendors = await Vendor.find().sort({createdAt: -1}) //createdAt -1 will sort the vendors from newest to oldest
-        res.status(200).json(vendors)
+// export async function getAllVendors (_,res) { //using an _ instead of req when declared but value is never read
+//     try {
+//         // fetch all vendors - using .find() will give ALL vendors
+//         const vendors = await Vendor.find().sort({createdAt: -1}) //createdAt -1 will sort the vendors from newest to oldest
+//         res.status(200).json(vendors)
+//     } catch (error) {
+//         console.error('Error in getAllVendors controller', error)
+//         res.status(500).json({message: 'Internal server error'})
+//     }
+// }
+
+// SEARCH FEATURE - fxn to get all vendors AND search through vendors
+export async function searchVendors(req, res) {
+    console.log('searchVendors controller called with query:', req.query.search)
+    try { 
+        const {search} = req.query
+        // if no search query provided, return all vendors
+        if (!search) {
+            const allVendors = await Vendor.find().sort({createdAt: -1})
+            return res.status(200).json(allVendors) //return is needed to stop the function from running after sending a response. w/o it, the fxn would keep running and go straight to the search query section
+        }
+        // search for vendors by vendorName or vendorEmail
+        const findVendor = await Vendor.find({
+            $or: [
+                {vendorName: {$regex: search, $options: 'i'}},
+                {vendorEmail: {$regex: search, $options: 'i'}}  // 'i' makes the search case-insensitive (uppercase and lowercase letters are treated the same)  $options: 'i' is for regex options to make it case-insensitive
+            ]
+        })
+        // if no vendors are found, return a 404 status code and a message 
+        // Mongoose .find() returns an array of documents, so we use.length to check if the array is empty. 
+        if (findVendor.length === 0) {
+            return res.status(404).json({message: 'No vendors found matching the search query'})
+        }
+            // if else, return a 200 status code and the found vendor(s)
+            res.status(200).json(findVendor)
     } catch (error) {
-        console.error('Error in getAllVendors controller', error)
+        console.error('Error in searchVendors controller', error)
         res.status(500).json({message: 'Internal server error'})
     }
 }
@@ -49,7 +79,7 @@ export async function createAVendor (req,res) {
 // fxn to update a vendor
 export async function updateAVendor (req,res)  {
     try {
-        const {vendorName, vendorEmail} = req.body //will give us some data 
+        const {vendorName, vendorEmail, phoneNumber, contactRole, primaryContact, vendorAddress, taxId, dbaName} = req.body //will give us some data 
         const updatedVendor = await Vendor.findByIdAndUpdate(
             req.params.vendorId, 
             {
@@ -59,7 +89,8 @@ export async function updateAVendor (req,res)  {
                 contactRole,
                 primaryContact, 
                 vendorAddress,
-                taxId
+                taxId,
+                dbaName
             },
             {
                 new: true //ensure that the modified document is returned in the callback or promise. without new: true, would typically return the original unmodofied docuemtn by default
@@ -76,18 +107,10 @@ export async function updateAVendor (req,res)  {
 // fxn to delete a vendor
 export async function deleteAVendor (req, res) {
     try {
-        const {vendorName, vendorEmail} = req.body 
+        const {vendorName, dbaName, vendorAddress, taxId, primaryContact, contactRole, phoneNumber, vendorEmail} = req.body 
         const deletedVendor = await Vendor.findByIdAndDelete(
             req.params.vendorId,
-            {
-                vendorName, 
-                vendorEmail,
-                phoneNumber,
-                contactRole,
-                primaryContact, 
-                vendorAddress,
-                taxId
-            },
+            { vendorName, dbaName, vendorAddress, taxId, primaryContact, contactRole, phoneNumber, vendorEmail}, 
             {
                 new: true,
             }
@@ -102,32 +125,3 @@ export async function deleteAVendor (req, res) {
 
 
 
-
-// SEARCH FEATURE - fxn to search through vendors
-export async function searchVendors(req, res) {
-    try { 
-        const {search} = req.query
-        // if no search query provided, return all vendors
-        if (!search) {
-            const allVendors = await Vendor.find().sort({createdAt: -1})
-            res.status(200).json(allVendors)
-        }
-        // search for vendors by vendorName or vendorEmail
-        const findVendor = await Vendor.find({
-            $or: [
-                {vendorName: {$regex: search, $options: 'i'}},
-                {vendorEmail: {$regex: search, $options: 'i'}}  // 'i' makes the search case-insensitive (uppercase and lowercase letters are treated the same)  $options: 'i' is for regex options to make it case-insensitive
-            ]
-        })
-        // if no vendors are found, return a 404 status code and a message 
-        // Mongoose .find() returns an array of documents, so we use.length to check if the array is empty. 
-        if (findVendor.length === 0) {
-            return res.status(404).json({message: 'No vendors found matching the search query'})
-        }
-            // if else, return a 200 status code and the found vendor(s)
-            res.status(200).json(findVendor)
-    } catch (error) {
-        console.error('Error in searchVendors controller', error)
-        res.status(500).json({message: 'Internal server error'})
-    }
-}
