@@ -16,7 +16,7 @@ const VendorHomepage = () => {
   // set vendors initial state to an empty array, as vendors are created, they will be pushed into array (newest vendors will go at the top of list)
   const [vendors, setVendors] = useState([]) 
   // search  initial state to an empty string
-  const [search, setSearch] = useState('')
+  // const [search, setSearch] = useState('')
 
 
   // fetch vendors from backend
@@ -50,7 +50,7 @@ const VendorHomepage = () => {
           {/* if vendors array length is greater than 0, then map through the vendor array then return the vendor table with vendors  */}
           {/* original code: <VendorsTable vendors={vendors} setVendors={setVendors} />  -- removed setVendors and put to VendorSearch  vendors={vendors} stays to display vendors after the search*/}
           {vendors.length > 0 && (
-                <VendorsTable vendors={vendors} /> 
+                <VendorsTable vendors={vendors} setVendors={setVendors}/> // vendors={vendors} receives the list of vendors and setVendors={setVendors} is used to update and display the vendors list
               )}
         </div>
       </div>
