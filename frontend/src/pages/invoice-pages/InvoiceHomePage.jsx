@@ -5,6 +5,7 @@ import RateLimitedUI from '../../components/RateLimitedUI'
 // import InvoiceCard from '../../components/invoice-components/InvoiceCard'
 import InvoicesNotFound from '../../components/invoice-components/InvoicesNotFound'
 import VendorInvoiceTable from '../../components/invoice-components/VendorInvoiceTable'
+import InvoiceSearch from '../../components/invoice-components/InvoiceSearch'
 
 
 // AXIOS API ROUTES
@@ -27,7 +28,14 @@ const InvoiceHomePage = () => {
         // using axios instead of fetch
         const res = await axiosAPI.get(`/vendors/${vendorId}/invoices`)
         console.log('invoices api response:' , res.data)
-        setInvoices(res.data)
+
+        // Ensure the response data is an array before setting it
+        if (Array.isArray(res.data)) {
+          setInvoices(res.data)
+        } else {
+          // if the response data is not an array, something is wrong and we will clear the invoices array
+          setInvoices([])
+        }
         setRateLimited(false) //set to false bc if we're able to get the data, we're not rate limited
         // const data = await res.json() ....this would be for fetch
       } catch (error) {
@@ -35,13 +43,16 @@ const InvoiceHomePage = () => {
           // console.log(error)
           if(error.response?.status === 429) {
             setRateLimited(true)
+          } else if (error.reponse?.status === 404) {
+            toast.error('Vendor not found. Failed to load invoices')
+            setInvoices([]) // Clear invoices array on 404
           } else {
-            toast.error('Failed to load invoices')
+            toast.error('Failed to fetch invoices')
           }
-      } finally {
-        setLoading(false)
+        } finally {
+          setLoading(false)
+        }
       }
-    }
     if (vendorId) { // only fetch if vendorId is available
       fetchInvoices()
 
@@ -52,6 +63,10 @@ const InvoiceHomePage = () => {
       <InvoiceNavBar />
 
       {isRateLimited && <RateLimitedUI />}
+
+      <div>
+        <InvoiceSearch invoices={invoices} setInvoices={setInvoices}/>
+      </div>
 
       <div className='mx-w-7xl mx-auto p-4 mt-6'>
         {loading && <div className='text-center text-primary py-10'>Loading invoices...</div>}
