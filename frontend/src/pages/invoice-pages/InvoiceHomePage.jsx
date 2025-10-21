@@ -22,6 +22,7 @@ const InvoiceHomePage = () => {
   const [invoices, setInvoices] = useState([])
   const [loading, setLoading] = useState(true)
 
+
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
@@ -58,6 +59,8 @@ const InvoiceHomePage = () => {
 
     }
   }, [vendorId]) //refetch is the vendorId changes
+
+  
   return (
     <div className='min-h-screen'>
       <InvoiceNavBar />
