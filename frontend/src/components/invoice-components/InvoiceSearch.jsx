@@ -5,7 +5,6 @@ import { useParams } from 'react-router'
 import toast from 'react-hot-toast'
 
 // AXIOS
-import axios from 'axios'
 import axiosAPI from '../../lib/axios'
 
 const InvoiceSearch = ({invoices, setInvoices}) => {
@@ -16,7 +15,7 @@ const InvoiceSearch = ({invoices, setInvoices}) => {
     // fxn to fetch invoices based on search query from the backend 
     const handleSearchInvoices = async (query) => {
         try {
-            const response = await axios.get(`vendor/${vendorId}/invoices?search=${query}`)
+            const response = await axiosAPI.get(`vendor/${vendorId}/invoices?search=${query}`)
             setInvoices(response.data)
         } catch (error) {
             console.log('Error fetching invoices', error)

@@ -25,6 +25,7 @@ const InvoiceHomePage = () => {
 
   useEffect(() => {
     const fetchInvoices = async () => {
+      setLoading(true) // start loading spinner
       try {
         // using axios instead of fetch
         const res = await axiosAPI.get(`/vendors/${vendorId}/invoices`)
@@ -60,7 +61,7 @@ const InvoiceHomePage = () => {
     }
   }, [vendorId]) //refetch is the vendorId changes
 
-  
+
   return (
     <div className='min-h-screen'>
       <InvoiceNavBar />
@@ -68,7 +69,7 @@ const InvoiceHomePage = () => {
       {isRateLimited && <RateLimitedUI />}
 
       <div>
-        <InvoiceSearch invoices={invoices} setInvoices={setInvoices}/>
+        <InvoiceSearch setInvoices={setInvoices}/>
       </div>
 
       <div className='mx-w-7xl mx-auto p-4 mt-6'>
