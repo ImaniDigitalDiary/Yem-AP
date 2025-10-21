@@ -34,9 +34,8 @@ export async function searchInvoicesByVendor(req, res) {
         const vendor = await Vendor.findById(vendorId)
         if (!vendor) return res.status(404).json({message: 'Vendor not found'})
 
-        // build query to find invoices by vendorId and search query
+        // build  search condition - query to find invoices by vendorId and search query
         const query = {vendor: vendorId}
-
         if (search) {
             query.$or = [
                 {invoiceNumber: {$regex: search, $options: 'i'}},
@@ -44,12 +43,15 @@ export async function searchInvoicesByVendor(req, res) {
             ]
         }
 
-        
-
         // find invoices by going into Invoice model, finding the vendorId value from invoice models vendor key
         // then populate only the vendorName value from the vendor key in my invoice model --> which pulls from ObjectId
-        const invoices = await Invoice.find({vendor: vendorId, $text: {$search: search}})
-           .populate('vendor', 'vendorName vendorEmail')
+        const invoices = await Invoice.find(query).populate('vendor', 'vendorName vendorEmail')
+
+        // if no invoices are found, return a 404 status code and messase 
+        if (!invoices.length) {
+            return res.status(404).json({message: `No invoices found for vendor ${vendorId} with search query: ${search}`})
+        }
+        // or if invoices are found, return the invoices
         res.status(200).json(invoices)
     } catch (error) {
         console.error('Error in searchInvoices controller', error)
