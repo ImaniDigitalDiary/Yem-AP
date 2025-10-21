@@ -51,7 +51,14 @@ const InvoiceSearch = ({invoices, setInvoices}) => {
             console.error('Failed to fetch invoices', error)
         }
     }
+}
 
+
+    const handleClearSearch = () => {
+        setInvoiceQuery('')
+        setInvoices(originalInvoices)
+        setHasSearched(false)
+    }
 
     // fxn to fetch invoices based on search query from the backend 
     // const handleSearchInvoices = async (query) => {
@@ -70,13 +77,13 @@ const InvoiceSearch = ({invoices, setInvoices}) => {
     // }
 
     // live search effect (debounce effect)
-    useEffect(() => {
-        const delayDebounce = setTimeout(() => {
-            handleSearchInvoices(invoiceQuery)
-        }, 500)
+    // useEffect(() => {
+    //     const delayDebounce = setTimeout(() => {
+    //         handleSearchInvoices(invoiceQuery)
+    //     }, 500)
         
-        return () => clearTimeout(delayDebounce)
-    }, [invoiceQuery, setInvoices])
+    //     return () => clearTimeout(delayDebounce)
+    // }, [invoiceQuery, setInvoices])
 
   return (
     <div className='p-4'>
@@ -93,6 +100,15 @@ const InvoiceSearch = ({invoices, setInvoices}) => {
         >
             Search Invoices
         </button>
+
+        {hasSearched  && (
+            <button
+                onClick={handleClearSearch}
+                className='bg-gray-500 textwhite px-4 py-2 rounded-md hover:bg-gray-700'
+            >
+                Clear Search
+            </button>
+        )}
     </div>
   )
 }
