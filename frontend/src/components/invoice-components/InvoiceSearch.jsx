@@ -12,78 +12,31 @@ const InvoiceSearch = ({invoices, setInvoices}) => {
     const [invoiceQuery, setInvoiceQuery] = useState('')
     const {vendorId} = useParams()
 
-    const [originalInvoices, setOriginalInvoices] = useState([])
-    const [hasSearched, setHasSearched] = useState(false)
-
-    // fetch intial invoices on page load to keep a copy
-    useEffect(() => {
-        if (vendorId) {
-            const fetchInitialInvoices = async () => {
-                try {
-                    const res = await axios.get(`/vendors/${vendorId}/invoices`)
-                    if (Array.isArray(res.data)) {
-                        setOriginalInvoices(res.data)
-                        setInvoices(res.data) // Also update the parent component's state as well
-                    }
-                } catch (error) {
-                    console.error('Failed to fetch initial invoices for search component', error)
-                }
-            }
-            fetchInitialInvoices()
-        }
-    }, [vendorId, setInvoices])
-
-
-    const handleSearchInvoices = async (query) => {
-        if (!query.trim()) {
-            setInvoices(originalInvoices) // reset to original list of invoices if search input is empty
-            setHasSearched(false)
-            return
-        } try {
-            const response = await axiosAPI.get(`/vendors/${vendorId}/invoices?saerch?serch=${query}`)
-            setInvoices(response.data)
-            setHasSearched(true)
-        } catch (error) {
-            if (error.response && error.response.status === 404) {
-                setInvoices([]) // clear invoices if search query does not match any invoice
-        } else {
-            toast.error('Failed to fetch invoices')
-            console.error('Failed to fetch invoices', error)
-        }
-    }
-}
-
-
-    const handleClearSearch = () => {
-        setInvoiceQuery('')
-        setInvoices(originalInvoices)
-        setHasSearched(false)
-    }
-
+   
     // fxn to fetch invoices based on search query from the backend 
-    // const handleSearchInvoices = async (query) => {
-    //     try {
-    //         const response = await axios.get(`vendor/${vendorId}/invoices?search=${query}`)
-    //         setInvoices(response.data)
-    //     } catch (error) {
-    //         console.log('Error fetching invoices', error)
-    //         // if error, clear results to an empty array
-    //         if (error.response && error.response.status === 404) {
-    //             setInvoices([])
-    //         } else {
-    //             toast.error('Failed to fetch invoices')
-    //         }
-    //     }
-    // }
+    const handleSearchInvoices = async (query) => {
+        try {
+            const response = await axios.get(`vendor/${vendorId}/invoices?search=${query}`)
+            setInvoices(response.data)
+        } catch (error) {
+            console.log('Error fetching invoices', error)
+            // if error, clear results to an empty array
+            if (error.response && error.response.status === 404) {
+                setInvoices([])
+            } else {
+                toast.error('Failed to fetch invoices')
+            }
+        }
+    }
 
     // live search effect (debounce effect)
-    // useEffect(() => {
-    //     const delayDebounce = setTimeout(() => {
-    //         handleSearchInvoices(invoiceQuery)
-    //     }, 500)
+    useEffect(() => {
+        const delayDebounce = setTimeout(() => {
+            handleSearchInvoices(invoiceQuery)
+        }, 500)
         
-    //     return () => clearTimeout(delayDebounce)
-    // }, [invoiceQuery, setInvoices])
+        return () => clearTimeout(delayDebounce)
+    }, [invoiceQuery, setInvoices, vendorId])
 
   return (
     <div className='p-4'>
@@ -100,15 +53,6 @@ const InvoiceSearch = ({invoices, setInvoices}) => {
         >
             Search Invoices
         </button>
-
-        {hasSearched  && (
-            <button
-                onClick={handleClearSearch}
-                className='bg-gray-500 textwhite px-4 py-2 rounded-md hover:bg-gray-700'
-            >
-                Clear Search
-            </button>
-        )}
     </div>
   )
 }
