@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 
 // AXIOS
 import axios from 'axios'
+import axiosAPI from '../../lib/axios'
 
 const InvoiceSearch = ({invoices, setInvoices}) => {
     const [invoiceQuery, setInvoiceQuery] = useState('')
@@ -31,6 +32,25 @@ const InvoiceSearch = ({invoices, setInvoices}) => {
             fetchInitialInvoices()
         }
     }, [vendorId, setInvoices])
+
+
+    const handleSearchInvoices = async (query) => {
+        if (!query.trim()) {
+            setInvoices(originalInvoices) // reset to original list of invoices if search input is empty
+            setHasSearched(false)
+            return
+        } try {
+            const response = await axiosAPI.get(`/vendors/${vendorId}/invoices?saerch?serch=${query}`)
+            setInvoices(response.data)
+            setHasSearched(true)
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                setInvoices([]) // clear invoices if search query does not match any invoice
+        } else {
+            toast.error('Failed to fetch invoices')
+            console.error('Failed to fetch invoices', error)
+        }
+    }
 
 
     // fxn to fetch invoices based on search query from the backend 
