@@ -8,7 +8,6 @@ const VendorInvoiceTable = ({invoices}) => {
   if (!Array.isArray(invoices) || invoices.length === 0) {
     return <InvoicesNotFound />
   }
-
   // get vendor name once i know the array is not empty
   // since all invoices belong to the same vendor for each invoice list, just need to grab the first invoice from vendor to be able to use vendor info- aka why use [0] before my optional chaining (?.) 
   // REMEMBER** - without optional chaining - error will show as 'Cannot read properies of undefined' (future ref) - with opt. chaining, will return undefined
