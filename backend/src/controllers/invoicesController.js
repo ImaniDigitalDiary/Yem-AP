@@ -2,6 +2,38 @@ import Invoice from '../models/invoiceModel.js'
 import Vendor from '../models/vendorModel.js'
 
 
+
+// SEARCH FUNCTIONALITY
+export async function searchInvoicesByVendor(req, res, next) {
+    try {
+        // grab the vendorId
+        const {vendorId} = req.params
+        // grab the query string from the request
+        const {query} = req.query
+
+        // 1. build a search condition
+        const searchCondition = {vendor: vendorId}
+
+        // 2. if a search query is provided, add it to the search condition
+        if (query) {
+            searchCondition.$or = [
+                {invoiceNumber: {$regex: query, $options: 'i'}},
+            ]
+        }
+
+        // 3. find invoices by going into Invoice model, applying the search condition then populate only the vendorName value from the vendor key in my invoice model --> which pulls from ObjectId
+        const invoices = await Invoice.find(searchCondition).populate('vendor', 'vendorName vendorEmail')
+
+        // 4. return the found invoices
+        res.status(200).json(invoices)
+    } catch (error) {
+        console.error('Error in searchInvoicesByVendor controller', error)
+        res.status(500).json({message: 'Internal server error'})
+    }
+}
+
+
+// CRUD OPERATION ROUTES FOR INVOICES
 // // fxn to get all invoices under specific vendor
 export async function getAllInvoicesByVendor(req,res, next) {
     try {
@@ -21,14 +53,6 @@ export async function getAllInvoicesByVendor(req,res, next) {
         res.status(500).json({message: 'Internal server error'})
     }
 }
-
-  
-       
-
-        
-        
-
-
 
 export async function getInvoiceById(req, res) {
     try {
