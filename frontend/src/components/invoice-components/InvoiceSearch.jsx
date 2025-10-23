@@ -53,18 +53,23 @@ useEffect(() =>  {
 }, [invoiceSearchQuery]) // useEffect will run only when invoiceSearchQuery changes
 
   return (
-    <div>
-        <input 
-            value={invoiceSearchQuery}
-            onChange={(e) => setInvoiceSearchQuery(e.target.value)}  // Update the state of invoiceSearchQuery when the input changes
-            type='text' 
-            placeholder='Search Invoices' 
-        />
-        <button
-            onClick={() => handleSearchInvoices(invoiceSearchQuery)}  // When the user clicks the search button, call the handleSearchClick function
-        >
-            Click to search invoices
-        </button>
+    <div className='p-4'>
+        <div className='flex items-center gap-2'>
+            <input 
+                value={invoiceSearchQuery}
+                onChange={(e) => setInvoiceSearchQuery(e.target.value)}  // Update the state of invoiceSearchQuery when the input changes
+                type='text' 
+                placeholder='Search Invoices...'
+                className='p-2 rounded-md w-96 border' 
+            />
+            <button
+                className='bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700'
+                onClick={() => handleSearchInvoices(invoiceSearchQuery)}  // When the user clicks the search button, call the handleSearchClick function
+            >
+                Click to search invoices
+            </button>
+        </div>
+        
     </div>
 
   )
