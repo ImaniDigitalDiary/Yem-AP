@@ -15,7 +15,7 @@ const InvoiceSearch = ({invoices, setInvoices}) => {
     // fxn to fetch invoices based on search query from the backend 
     const handleSearchInvoices = async (query) => {
         try {
-            const response = await axiosAPI.get(`vendor/${vendorId}/invoices?search=${query}`)
+            const response = await axiosAPI.get(`/vendors/${vendorId}/invoices?search=${query}`)
             setInvoices(response.data)
         } catch (error) {
             console.log('Error fetching invoices', error)
@@ -29,13 +29,13 @@ const InvoiceSearch = ({invoices, setInvoices}) => {
     }
 
     // live search effect (debounce effect)
-    useEffect(() => {
-        const delayDebounce = setTimeout(() => {
-            handleSearchInvoices(invoiceQuery)
-        }, 500)
+    // useEffect(() => {
+    //     const delayDebounce = setTimeout(() => {
+    //         handleSearchInvoices(invoiceQuery)
+    //     }, 500)
         
-        return () => clearTimeout(delayDebounce)
-    }, [invoiceQuery, setInvoices, vendorId])
+    //     return () => clearTimeout(delayDebounce)
+    // }, [invoiceQuery, setInvoices, vendorId])
 
   return (
     <div className='p-4'>

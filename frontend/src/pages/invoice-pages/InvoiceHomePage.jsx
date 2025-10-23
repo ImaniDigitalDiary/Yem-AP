@@ -45,7 +45,7 @@ const InvoiceHomePage = () => {
           // console.log(error)
           if(error.response?.status === 429) {
             setRateLimited(true)
-          } else if (error.reponse?.status === 404) {
+          } else if (error.response?.status === 404) {
             toast.error('Vendor not found. Failed to load invoices')
             setInvoices([]) // Clear invoices array on 404
           } else {
@@ -68,9 +68,9 @@ const InvoiceHomePage = () => {
 
       {isRateLimited && <RateLimitedUI />}
 
-      <div>
+      {/* <div>
         <InvoiceSearch setInvoices={setInvoices}/>
-      </div>
+      </div> */}
 
       <div className='mx-w-7xl mx-auto p-4 mt-6'>
         {loading && <div className='text-center text-primary py-10'>Loading invoices...</div>}
