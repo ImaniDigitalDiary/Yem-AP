@@ -4,8 +4,6 @@ import { searchVendors, getVendorById, createAVendor, deleteAVendor, updateAVend
 
 // invoice routes
 import invoicesRoutes from './invoicesRoutes.js'
-// invoice controller
-import { searchInvoicesByVendor, getAllInvoicesByVendor } from '../controllers/invoicesController.js'
 
 const router = express.Router()
 
@@ -25,13 +23,14 @@ router.put('/:vendorId', updateAVendor)
 router.delete('/:vendorId', deleteAVendor)
 
 
+// ** for mounting another router
+router.use('/:vendorId/invoices', invoicesRoutes)
 
 // **** NESTED INVOICE ROUTES
     // router.get instead of use because im not mounting another router but instead, im getting a single GET endpoint that fetches invoices under a vendor
     // when user sends a gET request to /api/vendors/:vendorId/invoices, it will automatically call the searchInvoicesByVendor method from invoicesController.js
     // router.get('/:vendorId/invoices', searchInvoicesByVendor)
 
-    // for mounting another router
-    router.use('/:vendorId/invoices', invoicesRoutes)
+    
 
 export default router

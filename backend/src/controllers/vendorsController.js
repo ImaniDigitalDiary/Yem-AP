@@ -16,7 +16,7 @@ import Invoice from '../models/invoiceModel.js'
 
 // SEARCH FEATURE - fxn to get all vendors AND search through vendors
 export async function searchVendors(req, res) {
-    console.log('searchVendors controller called with query:', req.query.search)
+    // console.log('searchVendors controller called with query:', req.query.search)
     try { 
         const {search} = req.query
         // if no search query provided, return all vendors

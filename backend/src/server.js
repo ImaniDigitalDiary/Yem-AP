@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 5003
 // cors package / cors method - goes b4 ratelimiter bc we're trying to send a response back
 app.use(
     cors({
-        origin: 'http://localhost:5173',
+        origin: 'http://localhost:5173',                                                                                    
 }))
 // app.use to add middleware
 app.use(express.json()) // this middleware will parson the JSON bodies: req.body (get access to req.body) without this middleware, my req will come out as undefined
